@@ -4,7 +4,8 @@ theme: hugo-theme-stack
 title: Example Site
 copyright: Example Person
 
-enableGitInfo: true  # Enable lastmod from Git
+# Enable lastmod from Git
+enableGitInfo: true  
 frontmatter:
   lastmod: ["lastmod", ":git", "date", "publishDate"]
 
@@ -24,21 +25,21 @@ languages:
         params:
             sidebar:
                 subtitle: Example description
-    zh-cn:
-        languageName: 中文
-        title: 演示站点
-        weight: 2
-        params:
-            sidebar:
-                subtitle: 演示说明
-    ar:
-        languageName: عربي
-        languagedirection: rtl
-        title: موقع تجريبي
-        weight: 3
-        params:
-            sidebar:
-                subtitle: وصف تجريبي
+    # zh-cn:
+    #     languageName: 中文
+    #     title: 演示站点
+    #     weight: 2
+    #     params:
+    #         sidebar:
+    #             subtitle: 演示说明
+    # ar:
+    #     languageName: عربي
+    #     languagedirection: rtl
+    #     title: موقع تجريبي
+    #     weight: 3
+    #     params:
+    #         sidebar:
+    #             subtitle: وصف تجريبي
 
 services:
     # Change it to your Disqus shortname before using
@@ -186,6 +187,7 @@ params:
             - type: toc
 
     opengraph:
+        enabled: true
         twitter:
             # Your Twitter username
             site:
