@@ -1,8 +1,8 @@
 baseurl: https://dominikjaro.pages.dev/
 languageCode: en-us
 theme: hugo-theme-stack
-title: Example Site
-copyright: Example Person
+title: DominikJaro
+copyright: Dominik Jaro
 
 # Enable lastmod from Git
 enableGitInfo: true  
@@ -20,7 +20,7 @@ hasCJKLanguage: false
 languages:
     en:
         languageName: English
-        title: Example Site
+        title: Dominik Jaro
         weight: 1
         params:
             sidebar:
@@ -223,15 +223,15 @@ menu:
     social:
         - identifier: github
           name: GitHub
-          url: https://github.com/CaiJimmy/hugo-theme-stack
+          url: https://github.com/dominikjaro
           params:
               icon: brand-github
 
-        - identifier: twitter
-          name: Twitter
-          url: https://twitter.com
+        - identifier: linkedin
+          name: LinkedIn
+          url: www.linkedin.com/in/dominik-jaro
           params:
-              icon: brand-twitter
+              icon: brand-linkedin
 
 related:
     includeNewer: true
