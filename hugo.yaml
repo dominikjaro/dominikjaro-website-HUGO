@@ -227,11 +227,11 @@ menu:
           params:
               icon: brand-github
 
-        # - identifier: linkedin
-        #   name: LinkedIn
-        #   url: www.linkedin.com/in/dominik-jaro
-        #   params:
-        #       icon: brand-linkedin
+        - identifier: linkedin
+          name: LinkedIn
+          url: www.linkedin.com/in/dominik-jaro
+          params:
+              icon: brand-linkedin
 
 related:
     includeNewer: true
