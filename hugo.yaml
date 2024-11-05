@@ -188,9 +188,9 @@ params:
 
     opengraph:
         enabled: true
-        twitter:
-            # Your Twitter username
-            site:
+        linkedin:
+            # Your LinkedIn username
+            site: dominik-jaro
 
             # Available values: summary, summary_large_image
             card: summary_large_image
@@ -199,7 +199,7 @@ params:
         opengraph:
             enabled: false
             local: false
-            src:
+            src: /icon/brand-linkedin.svg
 
     colorScheme:
         # Display toggle
@@ -229,7 +229,7 @@ menu:
 
         - identifier: linkedin
           name: LinkedIn
-          url: www.linkedin.com/in/dominik-jaro
+          url: https//www.linkedin.com/in/dominik-jaro
           params:
               icon: brand-linkedin
 
