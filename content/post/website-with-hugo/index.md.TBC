@@ -30,3 +30,5 @@ This will start the Hugo server and you can view your site at http://localhost:1
 Add your content: Edit the content/posts/my-first-post.md file and add your content.
 
 If you already have an existing site and just need to add it to your Hugo project, you can copy your existing content and configuration files into the new Hugo site directory you created.
+
+URL: https://www.jakewiesler.com/blog/hugo-directory-structure
