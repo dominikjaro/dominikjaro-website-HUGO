@@ -12,10 +12,10 @@
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/</guid>
-        <description>&lt;img src="http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png" alt="Featured image of post 🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform" /&gt;&lt;h2 id=&#34;-introduction&#34;&gt;👋 Introduction
-&lt;/h2&gt;&lt;p&gt;In my role as a DevOps Engineer, I tackled the challenge of importing our existing Cloudflare configurations into Terraform. Manual migration would have been time-consuming and error-prone. &lt;code&gt;cf-terraforming&lt;/code&gt;—a powerful tool that automates this process by generating Terraform resource code and fetching resource IDs directly from Cloudflare.&lt;/p&gt;
-&lt;h2 id=&#34;-installation&#34;&gt;⚙️ Installation
-&lt;/h2&gt;&lt;p&gt;On macOS, installation is straightforward using Homebrew:&lt;/p&gt;
+        <description>&lt;img src="http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png" alt="Featured image of post 🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform" /&gt;&lt;h2 id=&#34;-introduction&#34;&gt;👋 Introduction&lt;/h2&gt;
+&lt;p&gt;In my role as a DevOps Engineer, I tackled the challenge of importing our existing Cloudflare configurations into Terraform. Manual migration would have been time-consuming and error-prone. &lt;code&gt;cf-terraforming&lt;/code&gt;—a powerful tool that automates this process by generating Terraform resource code and fetching resource IDs directly from Cloudflare.&lt;/p&gt;
+&lt;h2 id=&#34;-installation&#34;&gt;⚙️ Installation&lt;/h2&gt;
+&lt;p&gt;On macOS, installation is straightforward using Homebrew:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -26,15 +26,15 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install cloudflare/cloudflare/cf-terraforming
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;-prerequisites&#34;&gt;✅ Prerequisites
-&lt;/h2&gt;&lt;p&gt;Before getting started, ensure you have:&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-prerequisites&#34;&gt;✅ Prerequisites&lt;/h2&gt;
+&lt;p&gt;Before getting started, ensure you have:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;A Cloudflare account with defined resources&lt;/li&gt;
 &lt;li&gt;Cloudflare API key&lt;/li&gt;
 &lt;li&gt;An initialized Terraform directory&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;-setting-up-credentials&#34;&gt;🔑 Setting Up Credentials
-&lt;/h2&gt;&lt;p&gt;Best practice is to store Cloudflare credentials as environment variables:&lt;/p&gt;
+&lt;h2 id=&#34;-setting-up-credentials&#34;&gt;🔑 Setting Up Credentials&lt;/h2&gt;
+&lt;p&gt;Best practice is to store Cloudflare credentials as environment variables:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -47,9 +47,9 @@
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;CLOUDFLARE_API_KEY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;my_cloudflare_api_key&amp;#39;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;-key-commands&#34;&gt;💻 Key Commands
-&lt;/h2&gt;&lt;h3 id=&#34;-generating-resources&#34;&gt;🛠️ Generating Resources
-&lt;/h3&gt;&lt;p&gt;To generate Terraform code for your Cloudflare resources:&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-key-commands&#34;&gt;💻 Key Commands&lt;/h2&gt;
+&lt;h3 id=&#34;-generating-resources&#34;&gt;🛠️ Generating Resources&lt;/h3&gt;
+&lt;p&gt;To generate Terraform code for your Cloudflare resources:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -62,8 +62,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --zone &lt;span class=&#34;s2&#34;&gt;&amp;#34;my_zone_id&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; generated_resources.tf
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;-importing-resources&#34;&gt;⬇️ Importing Resources
-&lt;/h3&gt;&lt;p&gt;To get import commands and resource IDs:&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;-importing-resources&#34;&gt;⬇️ Importing Resources&lt;/h3&gt;
+&lt;p&gt;To get import commands and resource IDs:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -76,8 +76,8 @@
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --zone &lt;span class=&#34;s2&#34;&gt;&amp;#34;my_zone_id&amp;#34;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;-difficulties-that-i-faced&#34;&gt;🤔 Difficulties That I Faced
-&lt;/h2&gt;&lt;p&gt;While using &lt;code&gt;cf-terraforming&lt;/code&gt;, I encountered several challenges:&lt;/p&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-difficulties-that-i-faced&#34;&gt;🤔 Difficulties That I Faced&lt;/h2&gt;
+&lt;p&gt;While using &lt;code&gt;cf-terraforming&lt;/code&gt;, I encountered several challenges:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Resource Naming&lt;/strong&gt;: The tool assigned resource IDs as names, leading to less readable Terraform code.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Import Limitations&lt;/strong&gt;: Some resources were not supported by &lt;code&gt;cf-terraforming&lt;/code&gt;, requiring manual handling.&lt;/li&gt;
@@ -87,22 +87,22 @@
 &lt;li&gt;&lt;strong&gt;Renamed Resources&lt;/strong&gt;: Updated the resource names in the Terraform files for clarity.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Custom Script for Resource IDs&lt;/strong&gt;: Created a script to retrieve resource IDs and integrate them into the Terraform import commands.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;-pro-tips&#34;&gt;💡 Pro Tips
-&lt;/h2&gt;&lt;ul&gt;
+&lt;h2 id=&#34;-pro-tips&#34;&gt;💡 Pro Tips&lt;/h2&gt;
+&lt;ul&gt;
 &lt;li&gt;&lt;strong&gt;Resource Naming&lt;/strong&gt;: &lt;code&gt;cf-terraforming&lt;/code&gt; names resources based on IDs. Consider renaming them for better readability.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Version Control&lt;/strong&gt;: Always commit your generated Terraform code to version control.&lt;/li&gt;
 &lt;li&gt;&lt;strong&gt;Validation&lt;/strong&gt;: After importing, use &lt;code&gt;terraform plan&lt;/code&gt; to verify the imported state matches the actual configuration.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;-available-commands&#34;&gt;🛠️ Available Commands
-&lt;/h2&gt;&lt;p&gt;The tool offers several useful commands:&lt;/p&gt;
+&lt;h2 id=&#34;-available-commands&#34;&gt;🛠️ Available Commands&lt;/h2&gt;
+&lt;p&gt;The tool offers several useful commands:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;generate&lt;/code&gt;: Create Terraform resource definitions&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;import&lt;/code&gt;: Generate import commands&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;version&lt;/code&gt;: Check tool version&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;help&lt;/code&gt;: Access detailed help&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;-conclusion&#34;&gt;🎉 Conclusion
-&lt;/h2&gt;&lt;p&gt;&lt;code&gt;cf-terraforming&lt;/code&gt; significantly streamlines the process of managing Cloudflare resources with Terraform. While it may require some post-processing for resource naming, it&amp;rsquo;s an invaluable tool for DevOps automation.&lt;/p&gt;
+&lt;h2 id=&#34;-conclusion&#34;&gt;🎉 Conclusion&lt;/h2&gt;
+&lt;p&gt;&lt;code&gt;cf-terraforming&lt;/code&gt; significantly streamlines the process of managing Cloudflare resources with Terraform. While it may require some post-processing for resource naming, it&amp;rsquo;s an invaluable tool for DevOps automation.&lt;/p&gt;
 </description>
         </item>
         <item>
@@ -119,8 +119,8 @@
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/p/gcp-static-website/</guid>
-        <description>&lt;img src="http://localhost:1313/p/gcp-static-website/GCP-static-website-plan-Terraform.png" alt="Featured image of post GCP-static-website" /&gt;&lt;h2 id=&#34;architecture-&#34;&gt;Architecture 🏗
-&lt;/h2&gt;&lt;p&gt;Hey!👋 I am Dominik and this project is a Terraform configuration that creates a static website on Google Cloud Platform.☁
+        <description>&lt;img src="http://localhost:1313/p/gcp-static-website/GCP-static-website-plan-Terraform.png" alt="Featured image of post GCP-static-website" /&gt;&lt;h2 id=&#34;architecture-&#34;&gt;Architecture 🏗&lt;/h2&gt;
+&lt;p&gt;Hey!👋 I am Dominik and this project is a Terraform configuration that creates a static website on Google Cloud Platform.☁
 The website is my personal portfolio and is hosted on a Cloud Storage bucket. The website is served using an HTTPS load balancer, which provides SSL termination. This ensures that all traffic to the website is secure and encrypted. The website is accessible at &lt;a class=&#34;link&#34; href=&#34;https://www.domssocial.co.uk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;www.domssocial.co.uk&lt;/a&gt;.&lt;/p&gt;
 &lt;p&gt;The project also creates a DNS zone for the website, which is used to route traffic to the load balancer.
@@ -139,8 +139,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;li&gt;A text editor like &lt;a class=&#34;link&#34; href=&#34;https://code.visualstudio.com/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Visual Studio Code&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;1to-get-started-clone-the-project-repository-to-your-local-machine-and-change-directory-to-the-project-directory&#34;&gt;1.🌀To get started, clone the project repository to your local machine and change directory to the project directory
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;h3 id=&#34;1to-get-started-clone-the-project-repository-to-your-local-machine-and-change-directory-to-the-project-directory&#34;&gt;1.🌀To get started, clone the project repository to your local machine and change directory to the project directory&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
@@ -156,8 +156,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd GCP-static-website
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;2-set-up-your-google-cloud-platform-gcp&#34;&gt;2. Set up your Google Cloud Platform (GCP)
-&lt;/h3&gt;&lt;p&gt;Before you start configuring the project, you will need to set up your GCP account and create a project.&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;2-set-up-your-google-cloud-platform-gcp&#34;&gt;2. Set up your Google Cloud Platform (GCP)&lt;/h3&gt;
+&lt;p&gt;Before you start configuring the project, you will need to set up your GCP account and create a project.&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;Create a &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Google Cloud Platform (GCP)&lt;/a&gt; account&lt;/li&gt;
@@ -168,8 +168,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
     &gt;https://domains.squarespace.com/&lt;/a&gt; to register my domain, however you can use any domain registrar.&lt;/li&gt;
 &lt;li&gt;In GCP you will need to enable some API services like IAM Service Account Credentials API, Cloud DNS API&amp;hellip;etc&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;3-initialize-the-terraform-project&#34;&gt;3. Initialize the Terraform project
-&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;h3 id=&#34;3-initialize-the-terraform-project&#34;&gt;3. Initialize the Terraform project&lt;/h3&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
@@ -177,18 +177,18 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terraform init
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h3 id=&#34;4configuring-the-project&#34;&gt;4.Configuring the Project💻
-&lt;/h3&gt;&lt;p&gt;I created 3 Terraform .tf files to configure the project:&lt;/p&gt;
+&lt;/div&gt;&lt;h3 id=&#34;4configuring-the-project&#34;&gt;4.Configuring the Project💻&lt;/h3&gt;
+&lt;p&gt;I created 3 Terraform .tf files to configure the project:&lt;/p&gt;
 &lt;ul&gt;
 &lt;li&gt;&lt;code&gt;main.tf&lt;/code&gt; - This file contains the main configuration for the project, including the Cloud Storage bucket, the IAM policy binding, the HTTP load balancer, and the Cloud CDN.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;variables.tf&lt;/code&gt; - This file contains the input variables for the project, including the project ID, the bucket name, and the index page.&lt;/li&gt;
 &lt;li&gt;&lt;code&gt;provider.tf&lt;/code&gt; - This file contains the provider configuration for Google Cloud Platform.&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;5-download-and-add-your-json-key-file-to-the-project&#34;&gt;5. Download and add your JSON key file to the project
-&lt;/h3&gt;&lt;p&gt;The service account key file is used to authenticate Terraform to your GCP account. You can create a service account and download the key file by following the instructions in the &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/iam/docs/creating-managing-service-account-keys&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;h3 id=&#34;5-download-and-add-your-json-key-file-to-the-project&#34;&gt;5. Download and add your JSON key file to the project&lt;/h3&gt;
+&lt;p&gt;The service account key file is used to authenticate Terraform to your GCP account. You can create a service account and download the key file by following the instructions in the &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/iam/docs/creating-managing-service-account-keys&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;GCP documentation&lt;/a&gt;.&lt;/p&gt;
-&lt;h3 id=&#34;6-creating-the-static-website&#34;&gt;6. Creating the Static Website
-&lt;/h3&gt;&lt;p&gt;Once you have configured the project, you can upload the Terraform configuration to Google Cloud Platform by running the following command:&lt;/p&gt;
+&lt;h3 id=&#34;6-creating-the-static-website&#34;&gt;6. Creating the Static Website&lt;/h3&gt;
+&lt;p&gt;Once you have configured the project, you can upload the Terraform configuration to Google Cloud Platform by running the following command:&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
@@ -215,10 +215,10 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;li&gt;SSL certificate for the domain&lt;/li&gt;
 &lt;li&gt;An HTTPS load balancer&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h3 id=&#34;7-testing-the-static-website&#34;&gt;7. Testing the Static Website👏
-&lt;/h3&gt;&lt;p&gt;Once the static website has been created, you can test it by visiting the following URL: &amp;lt;www.domssocial.co.uk&amp;gt;&lt;/p&gt;
-&lt;h3 id=&#34;how-it-works&#34;&gt;How it works🧮
-&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;When a user visits the website, the following steps occur
+&lt;h3 id=&#34;7-testing-the-static-website&#34;&gt;7. Testing the Static Website👏&lt;/h3&gt;
+&lt;p&gt;Once the static website has been created, you can test it by visiting the following URL: &amp;lt;www.domssocial.co.uk&amp;gt;&lt;/p&gt;
+&lt;h3 id=&#34;how-it-works&#34;&gt;How it works🧮&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;When a user visits the website, the following steps occur
 
 1. Cloud DNS: The user enters your domain name in their browser. Cloud DNS  translates the domain name to the IP address of the Cloud CDN edge location closest to the user.
 2.Cloud CDN Caching: The user&#39;s browser connects to the nearest Cloud CDN edge location.  Cloud CDN checks its cache for the requested content (static files like images, HTML, CSS, JavaScript).
@@ -226,11 +226,11 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 4.Load Balancer: If Cloud CDN doesn&#39;t have the requested content cached, it forwards the request to the Load Balancer.
 5.The Load Balancer distributes the request traffic across your backends, which are the Cloud Storage buckets that host your website content.
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h3 id=&#34;the-frontend-design-of-the-website&#34;&gt;The Frontend design of the website
-&lt;/h3&gt;&lt;p&gt;The frontend of the website is a HTML, CSS and JS files. I downloaded the template from &lt;a class=&#34;link&#34; href=&#34;https://html5up.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;h3 id=&#34;the-frontend-design-of-the-website&#34;&gt;The Frontend design of the website&lt;/h3&gt;
+&lt;p&gt;The frontend of the website is a HTML, CSS and JS files. I downloaded the template from &lt;a class=&#34;link&#34; href=&#34;https://html5up.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://html5up.net/&lt;/a&gt;, and modified it to suit my needs.&lt;/p&gt;
-&lt;h3 id=&#34;skills-gained&#34;&gt;Skills gained📚
-&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;1. How to use Terraform to create infrastructure on Google Cloud Platform
+&lt;h3 id=&#34;skills-gained&#34;&gt;Skills gained📚&lt;/h3&gt;
+&lt;pre&gt;&lt;code&gt;1. How to use Terraform to create infrastructure on Google Cloud Platform
 2. How to create a static website on Google Cloud Platform
 3. How to use Cloud Storage, Cloud CDN, and an HTTPS load balancer to host a static website
 4. How to use and create Cloud DNS zones
@@ -246,8 +246,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
         <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/portfolio/</guid>
-        <description>&lt;h1 id=&#34;portfolio&#34;&gt;Portfolio
-&lt;/h1&gt;&lt;p&gt;This page is currently under construction. 🚧&lt;/p&gt;
+        <description>&lt;h1 id=&#34;portfolio&#34;&gt;Portfolio&lt;/h1&gt;
+&lt;p&gt;This page is currently under construction. 🚧&lt;/p&gt;
 &lt;p&gt;Check back soon to see my completed portfolio of projects and work samples!&lt;/p&gt;
 </description>
         </item>
@@ -266,11 +266,11 @@ And the Cloud CDN is used to cache the website content and improve performance.&
         <pubDate>Wed, 09 Sep 2020 00:00:00 +0000</pubDate>
         
         <guid>http://localhost:1313/p/test-chinese/</guid>
-        <description>&lt;img src="http://localhost:1313/helena-hertz-wWZzXlDpMog-unsplash.jpg" alt="Featured image of post Chinese Test" /&gt;&lt;h2 id=&#34;正文测试&#34;&gt;正文测试
-&lt;/h2&gt;&lt;p&gt;而这些并不是完全重要，更加重要的问题是， 带着这些问题，我们来审视一下学生会退会。 既然如何， 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 我们不得不面对一个非常尴尬的事实，那就是， 可是，即使是这样，学生会退会的出现仍然代表了一定的意义。 学生会退会，发生了会如何，不发生又会如何。 经过上述讨论， 生活中，若学生会退会出现了，我们就不得不考虑它出现了的事实。 学生会退会，到底应该如何实现。 这样看来， 在这种困难的抉择下，本人思来想去，寝食难安。 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 就我个人来说，学生会退会对我的意义，不能不说非常重大。 莎士比亚曾经提到过，人的一生是短的，但如果卑劣地过这一生，就太长了。这似乎解答了我的疑惑。 莫扎特说过一句富有哲理的话，谁和我一样用功，谁就会和我一样成功。这启发了我， 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 学生会退会，到底应该如何实现。 一般来说， 从这个角度来看， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 在这种困难的抉择下，本人思来想去，寝食难安。 了解清楚学生会退会到底是一种怎么样的存在，是解决一切问题的关键。 一般来说， 生活中，若学生会退会出现了，我们就不得不考虑它出现了的事实。 问题的关键究竟为何？ 而这些并不是完全重要，更加重要的问题是。&lt;/p&gt;
+        <description>&lt;img src="http://localhost:1313/helena-hertz-wWZzXlDpMog-unsplash.jpg" alt="Featured image of post Chinese Test" /&gt;&lt;h2 id=&#34;正文测试&#34;&gt;正文测试&lt;/h2&gt;
+&lt;p&gt;而这些并不是完全重要，更加重要的问题是， 带着这些问题，我们来审视一下学生会退会。 既然如何， 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 我们不得不面对一个非常尴尬的事实，那就是， 可是，即使是这样，学生会退会的出现仍然代表了一定的意义。 学生会退会，发生了会如何，不发生又会如何。 经过上述讨论， 生活中，若学生会退会出现了，我们就不得不考虑它出现了的事实。 学生会退会，到底应该如何实现。 这样看来， 在这种困难的抉择下，本人思来想去，寝食难安。 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 就我个人来说，学生会退会对我的意义，不能不说非常重大。 莎士比亚曾经提到过，人的一生是短的，但如果卑劣地过这一生，就太长了。这似乎解答了我的疑惑。 莫扎特说过一句富有哲理的话，谁和我一样用功，谁就会和我一样成功。这启发了我， 对我个人而言，学生会退会不仅仅是一个重大的事件，还可能会改变我的人生。 学生会退会，到底应该如何实现。 一般来说， 从这个角度来看， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 在这种困难的抉择下，本人思来想去，寝食难安。 了解清楚学生会退会到底是一种怎么样的存在，是解决一切问题的关键。 一般来说， 生活中，若学生会退会出现了，我们就不得不考虑它出现了的事实。 问题的关键究竟为何？ 而这些并不是完全重要，更加重要的问题是。&lt;/p&gt;
 &lt;p&gt;奥斯特洛夫斯基曾经说过，共同的事业，共同的斗争，可以使人们产生忍受一切的力量。　带着这句话，我们还要更加慎重的审视这个问题： 一般来讲，我们都必须务必慎重的考虑考虑。 既然如此， 这种事实对本人来说意义重大，相信对这个世界也是有一定意义的。 带着这些问题，我们来审视一下学生会退会。 我认为， 我认为， 在这种困难的抉择下，本人思来想去，寝食难安。 问题的关键究竟为何？ 每个人都不得不面对这些问题。 在面对这种问题时， 要想清楚，学生会退会，到底是一种怎么样的存在。 我认为， 既然如此， 每个人都不得不面对这些问题。 在面对这种问题时， 那么， 我认为， 学生会退会因何而发生。&lt;/p&gt;
-&lt;h2 id=&#34;引用&#34;&gt;引用
-&lt;/h2&gt;&lt;blockquote&gt;
+&lt;h2 id=&#34;引用&#34;&gt;引用&lt;/h2&gt;
+&lt;blockquote&gt;
 &lt;p&gt;思念是最暖的忧伤像一双翅膀&lt;br&gt;
 让我停不了飞不远在过往游荡&lt;br&gt;
 不告而别的你 就算为了我着想&lt;br&gt;
@@ -278,8 +278,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;p&gt;&lt;em&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.youtube.com/watch?v=3aypp_YlBzI&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;最暖的憂傷 - 田馥甄&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;图片&#34;&gt;图片
-&lt;/h2&gt;&lt;p&gt;&lt;img src=&#34;http://localhost:1313/florian-klauer-nptLmg6jqDo-unsplash.jpg&#34;
+&lt;h2 id=&#34;图片&#34;&gt;图片&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&#34;http://localhost:1313/florian-klauer-nptLmg6jqDo-unsplash.jpg&#34;
 	
 	
 	
@@ -340,31 +340,31 @@ And the Cloud CDN is used to cache the website content and improve performance.&
         
         <guid>http://localhost:1313/p/markdown-syntax-guide/</guid>
         <description>&lt;img src="http://localhost:1313/p/markdown-syntax-guide/pawel-czerwinski-8uZPynIu-rQ-unsplash.jpg" alt="Featured image of post Markdown Syntax Guide" /&gt;&lt;p&gt;This article offers a sample of basic Markdown syntax that can be used in Hugo content files, also it shows whether basic HTML elements are decorated with CSS in a Hugo theme.&lt;/p&gt;
-&lt;h2 id=&#34;headings&#34;&gt;Headings
-&lt;/h2&gt;&lt;p&gt;The following HTML &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;—&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; elements represent six levels of section headings. &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; is the highest section level while &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; is the lowest.&lt;/p&gt;
-&lt;h1 id=&#34;h1&#34;&gt;H1
-&lt;/h1&gt;&lt;h2 id=&#34;h2&#34;&gt;H2
-&lt;/h2&gt;&lt;h3 id=&#34;h3&#34;&gt;H3
-&lt;/h3&gt;&lt;h4 id=&#34;h4&#34;&gt;H4
-&lt;/h4&gt;&lt;h5 id=&#34;h5&#34;&gt;H5
-&lt;/h5&gt;&lt;h6 id=&#34;h6&#34;&gt;H6
-&lt;/h6&gt;&lt;h2 id=&#34;paragraph&#34;&gt;Paragraph
-&lt;/h2&gt;&lt;p&gt;Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.&lt;/p&gt;
+&lt;h2 id=&#34;headings&#34;&gt;Headings&lt;/h2&gt;
+&lt;p&gt;The following HTML &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt;—&lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; elements represent six levels of section headings. &lt;code&gt;&amp;lt;h1&amp;gt;&lt;/code&gt; is the highest section level while &lt;code&gt;&amp;lt;h6&amp;gt;&lt;/code&gt; is the lowest.&lt;/p&gt;
+&lt;h1 id=&#34;h1&#34;&gt;H1&lt;/h1&gt;
+&lt;h2 id=&#34;h2&#34;&gt;H2&lt;/h2&gt;
+&lt;h3 id=&#34;h3&#34;&gt;H3&lt;/h3&gt;
+&lt;h4 id=&#34;h4&#34;&gt;H4&lt;/h4&gt;
+&lt;h5 id=&#34;h5&#34;&gt;H5&lt;/h5&gt;
+&lt;h6 id=&#34;h6&#34;&gt;H6&lt;/h6&gt;
+&lt;h2 id=&#34;paragraph&#34;&gt;Paragraph&lt;/h2&gt;
+&lt;p&gt;Xerum, quo qui aut unt expliquam qui dolut labo. Aque venitatiusda cum, voluptionse latur sitiae dolessi aut parist aut dollo enim qui voluptate ma dolestendit peritin re plis aut quas inctum laceat est volestemque commosa as cus endigna tectur, offic to cor sequas etum rerum idem sintibus eiur? Quianimin porecus evelectur, cum que nis nust voloribus ratem aut omnimi, sitatur? Quiatem. Nam, omnis sum am facea corem alique molestrunt et eos evelece arcillit ut aut eos eos nus, sin conecerem erum fuga. Ri oditatquam, ad quibus unda veliamenimin cusam et facea ipsamus es exerum sitate dolores editium rerore eost, temped molorro ratiae volorro te reribus dolorer sperchicium faceata tiustia prat.&lt;/p&gt;
 &lt;p&gt;Itatur? Quiatae cullecum rem ent aut odis in re eossequodi nonsequ idebis ne sapicia is sinveli squiatum, core et que aut hariosam ex eat.&lt;/p&gt;
-&lt;h2 id=&#34;blockquotes&#34;&gt;Blockquotes
-&lt;/h2&gt;&lt;p&gt;The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a &lt;code&gt;footer&lt;/code&gt; or &lt;code&gt;cite&lt;/code&gt; element, and optionally with in-line changes such as annotations and abbreviations.&lt;/p&gt;
-&lt;h4 id=&#34;blockquote-without-attribution&#34;&gt;Blockquote without attribution
-&lt;/h4&gt;&lt;blockquote&gt;
+&lt;h2 id=&#34;blockquotes&#34;&gt;Blockquotes&lt;/h2&gt;
+&lt;p&gt;The blockquote element represents content that is quoted from another source, optionally with a citation which must be within a &lt;code&gt;footer&lt;/code&gt; or &lt;code&gt;cite&lt;/code&gt; element, and optionally with in-line changes such as annotations and abbreviations.&lt;/p&gt;
+&lt;h4 id=&#34;blockquote-without-attribution&#34;&gt;Blockquote without attribution&lt;/h4&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Tiam, ad mint andaepu dandae nostion secatur sequo quae.
 &lt;strong&gt;Note&lt;/strong&gt; that you can use &lt;em&gt;Markdown syntax&lt;/em&gt; within a blockquote.&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h4 id=&#34;blockquote-with-attribution&#34;&gt;Blockquote with attribution
-&lt;/h4&gt;&lt;blockquote&gt;
+&lt;h4 id=&#34;blockquote-with-attribution&#34;&gt;Blockquote with attribution&lt;/h4&gt;
+&lt;blockquote&gt;
 &lt;p&gt;Don&amp;rsquo;t communicate by sharing memory, share memory by communicating.&lt;br&gt;
 — &lt;cite&gt;Rob Pike&lt;sup id=&#34;fnref:1&#34;&gt;&lt;a href=&#34;#fn:1&#34; class=&#34;footnote-ref&#34; role=&#34;doc-noteref&#34;&gt;1&lt;/a&gt;&lt;/sup&gt;&lt;/cite&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;h2 id=&#34;tables&#34;&gt;Tables
-&lt;/h2&gt;&lt;p&gt;Tables aren&amp;rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.&lt;/p&gt;
+&lt;h2 id=&#34;tables&#34;&gt;Tables&lt;/h2&gt;
+&lt;p&gt;Tables aren&amp;rsquo;t part of the core Markdown spec, but Hugo supports supports them out-of-the-box.&lt;/p&gt;
 &lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
@@ -383,8 +383,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h4 id=&#34;inline-markdown-within-tables&#34;&gt;Inline Markdown within tables
-&lt;/h4&gt;&lt;table&gt;
+&lt;h4 id=&#34;inline-markdown-within-tables&#34;&gt;Inline Markdown within tables&lt;/h4&gt;
+&lt;table&gt;
   &lt;thead&gt;
       &lt;tr&gt;
           &lt;th&gt;Italics&lt;/th&gt;
@@ -422,9 +422,9 @@ And the Cloud CDN is used to cache the website content and improve performance.&
       &lt;/tr&gt;
   &lt;/tbody&gt;
 &lt;/table&gt;
-&lt;h2 id=&#34;code-blocks&#34;&gt;Code Blocks
-&lt;/h2&gt;&lt;h4 id=&#34;code-block-with-backticks&#34;&gt;Code block with backticks
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;h2 id=&#34;code-blocks&#34;&gt;Code Blocks&lt;/h2&gt;
+&lt;h4 id=&#34;code-block-with-backticks&#34;&gt;Code block with backticks&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
@@ -450,8 +450,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;html&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;
 &lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h4 id=&#34;code-block-indented-with-four-spaces&#34;&gt;Code block indented with four spaces
-&lt;/h4&gt;&lt;pre&gt;&lt;code&gt;&amp;lt;!doctype html&amp;gt;
+&lt;/div&gt;&lt;h4 id=&#34;code-block-indented-with-four-spaces&#34;&gt;Code block indented with four spaces&lt;/h4&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;!doctype html&amp;gt;
 &amp;lt;html lang=&amp;quot;en&amp;quot;&amp;gt;
 &amp;lt;head&amp;gt;
   &amp;lt;meta charset=&amp;quot;utf-8&amp;quot;&amp;gt;
@@ -462,8 +462,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &amp;lt;/body&amp;gt;
 &amp;lt;/html&amp;gt;
 &lt;/code&gt;&lt;/pre&gt;
-&lt;h4 id=&#34;code-block-with-hugos-internal-highlight-shortcode&#34;&gt;Code block with Hugo&amp;rsquo;s internal highlight shortcode
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;h4 id=&#34;code-block-with-hugos-internal-highlight-shortcode&#34;&gt;Code block with Hugo&amp;rsquo;s internal highlight shortcode&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt; 1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt; 2
@@ -489,8 +489,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;&amp;lt;/&lt;/span&gt;&lt;span class=&#34;nt&#34;&gt;html&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;&amp;gt;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;h4 id=&#34;diff-code-block&#34;&gt;Diff code block
-&lt;/h4&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;h4 id=&#34;diff-code-block&#34;&gt;Diff code block&lt;/h4&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
 &lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
 &lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
 &lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
@@ -506,21 +506,21 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;gd&#34;&gt;&lt;/span&gt;&lt;span class=&#34;gi&#34;&gt;+ features = [&amp;#34;jpeg&amp;#34;, &amp;#34;dynamic&amp;#34;]
 &lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
-&lt;/div&gt;&lt;h2 id=&#34;list-types&#34;&gt;List Types
-&lt;/h2&gt;&lt;h4 id=&#34;ordered-list&#34;&gt;Ordered List
-&lt;/h4&gt;&lt;ol&gt;
+&lt;/div&gt;&lt;h2 id=&#34;list-types&#34;&gt;List Types&lt;/h2&gt;
+&lt;h4 id=&#34;ordered-list&#34;&gt;Ordered List&lt;/h4&gt;
+&lt;ol&gt;
 &lt;li&gt;First item&lt;/li&gt;
 &lt;li&gt;Second item&lt;/li&gt;
 &lt;li&gt;Third item&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h4 id=&#34;unordered-list&#34;&gt;Unordered List
-&lt;/h4&gt;&lt;ul&gt;
+&lt;h4 id=&#34;unordered-list&#34;&gt;Unordered List&lt;/h4&gt;
+&lt;ul&gt;
 &lt;li&gt;List item&lt;/li&gt;
 &lt;li&gt;Another item&lt;/li&gt;
 &lt;li&gt;And another item&lt;/li&gt;
 &lt;/ul&gt;
-&lt;h4 id=&#34;nested-list&#34;&gt;Nested list
-&lt;/h4&gt;&lt;ul&gt;
+&lt;h4 id=&#34;nested-list&#34;&gt;Nested list&lt;/h4&gt;
+&lt;ul&gt;
 &lt;li&gt;Fruit
 &lt;ul&gt;
 &lt;li&gt;Apple&lt;/li&gt;
@@ -535,14 +535,14 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;/ul&gt;
 &lt;/li&gt;
 &lt;/ul&gt;
-&lt;h2 id=&#34;other-elements--abbr-sub-sup-kbd-mark&#34;&gt;Other Elements — abbr, sub, sup, kbd, mark
-&lt;/h2&gt;&lt;p&gt;&lt;abbr title=&#34;Graphics Interchange Format&#34;&gt;GIF&lt;/abbr&gt; is a bitmap image format.&lt;/p&gt;
+&lt;h2 id=&#34;other-elements--abbr-sub-sup-kbd-mark&#34;&gt;Other Elements — abbr, sub, sup, kbd, mark&lt;/h2&gt;
+&lt;p&gt;&lt;abbr title=&#34;Graphics Interchange Format&#34;&gt;GIF&lt;/abbr&gt; is a bitmap image format.&lt;/p&gt;
 &lt;p&gt;H&lt;sub&gt;2&lt;/sub&gt;O&lt;/p&gt;
 &lt;p&gt;X&lt;sup&gt;n&lt;/sup&gt; + Y&lt;sup&gt;n&lt;/sup&gt; = Z&lt;sup&gt;n&lt;/sup&gt;&lt;/p&gt;
 &lt;p&gt;Press &lt;kbd&gt;CTRL&lt;/kbd&gt; + &lt;kbd&gt;ALT&lt;/kbd&gt; + &lt;kbd&gt;Delete&lt;/kbd&gt; to end the session.&lt;/p&gt;
 &lt;p&gt;Most &lt;mark&gt;salamanders&lt;/mark&gt; are nocturnal, and hunt for insects, worms, and other small creatures.&lt;/p&gt;
-&lt;h2 id=&#34;hyperlinked-image&#34;&gt;Hyperlinked image
-&lt;/h2&gt;&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://google.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+&lt;h2 id=&#34;hyperlinked-image&#34;&gt;Hyperlinked image&lt;/h2&gt;
+&lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://google.com&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;&lt;img src=&#34;https://www.google.com/images/branding/googlelogo/1x/googlelogo_light_color_272x92dp.png&#34;
 	
 	
@@ -573,8 +573,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
     &gt;Built-in Shortcodes&lt;/a&gt; for rich content, along with a &lt;a class=&#34;link&#34; href=&#34;https://gohugo.io/about/hugo-and-gdpr/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Privacy Config&lt;/a&gt; and a set of Simple Shortcodes that enable static and no-JS versions of various social media embeds.&lt;/p&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;youtube-privacy-enhanced-shortcode&#34;&gt;YouTube Privacy Enhanced Shortcode
-&lt;/h2&gt;&lt;div class=&#34;video-wrapper&#34;&gt;
+&lt;h2 id=&#34;youtube-privacy-enhanced-shortcode&#34;&gt;YouTube Privacy Enhanced Shortcode&lt;/h2&gt;
+&lt;div class=&#34;video-wrapper&#34;&gt;
     &lt;iframe loading=&#34;lazy&#34; 
             src=&#34;https://www.youtube.com/embed/ZJthWmvUzzc&#34; 
             allowfullscreen 
@@ -585,14 +585,14 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 
 &lt;br&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;twitter-simple-shortcode&#34;&gt;Twitter Simple Shortcode
-&lt;/h2&gt;&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;“In addition to being more logical, asymmetry has the advantage that its complete appearance is far more optically effective than symmetry.”&lt;br&gt;— Jan Tschichold &lt;a href=&#34;https://t.co/gcv7SrhvJb&#34;&gt;pic.twitter.com/gcv7SrhvJb&lt;/a&gt;&lt;/p&gt;&amp;mdash; Design Reviewed | Graphic Design History (@DesignReviewed) &lt;a href=&#34;https://twitter.com/DesignReviewed/status/1085870671291310081?ref_src=twsrc%5Etfw&#34;&gt;January 17, 2019&lt;/a&gt;&lt;/blockquote&gt;
+&lt;h2 id=&#34;twitter-simple-shortcode&#34;&gt;Twitter Simple Shortcode&lt;/h2&gt;
+&lt;blockquote class=&#34;twitter-tweet&#34;&gt;&lt;p lang=&#34;en&#34; dir=&#34;ltr&#34;&gt;“In addition to being more logical, asymmetry has the advantage that its complete appearance is far more optically effective than symmetry.”&lt;br&gt;— Jan Tschichold &lt;a href=&#34;https://t.co/gcv7SrhvJb&#34;&gt;pic.twitter.com/gcv7SrhvJb&lt;/a&gt;&lt;/p&gt;&amp;mdash; Design Reviewed | Graphic Design History (@DesignReviewed) &lt;a href=&#34;https://twitter.com/DesignReviewed/status/1085870671291310081?ref_src=twsrc%5Etfw&#34;&gt;January 17, 2019&lt;/a&gt;&lt;/blockquote&gt;
 
 
 &lt;br&gt;
 &lt;hr&gt;
-&lt;h2 id=&#34;vimeo-simple-shortcode&#34;&gt;Vimeo Simple Shortcode
-&lt;/h2&gt;&lt;style&gt;
+&lt;h2 id=&#34;vimeo-simple-shortcode&#34;&gt;Vimeo Simple Shortcode&lt;/h2&gt;
+&lt;style&gt;
 .__h_video {
    position: relative;
    padding-bottom: 56.23%;
@@ -624,8 +624,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
             &lt;/div&gt;
           &lt;/a&gt;
         &lt;/div&gt;
-&lt;h2 id=&#34;bilibilibi-shortcode&#34;&gt;bilibilibi Shortcode
-&lt;/h2&gt;
+&lt;h2 id=&#34;bilibilibi-shortcode&#34;&gt;bilibilibi Shortcode&lt;/h2&gt;
+
 
 
 
@@ -644,16 +644,16 @@ And the Cloud CDN is used to cache the website content and improve performance.&
     &lt;/iframe&gt;
 &lt;/div&gt;
 
-&lt;h2 id=&#34;gist-shortcode&#34;&gt;Gist Shortcode
-&lt;/h2&gt;&lt;script src=&#34;https://gist.github.com/spf13/7896402.js&#34;&gt;&lt;/script&gt;
+&lt;h2 id=&#34;gist-shortcode&#34;&gt;Gist Shortcode&lt;/h2&gt;
+&lt;script src=&#34;https://gist.github.com/spf13/7896402.js&#34;&gt;&lt;/script&gt;
 
-&lt;h2 id=&#34;gitlab-snippets-shortcode&#34;&gt;Gitlab Snippets Shortcode
-&lt;/h2&gt;&lt;script
+&lt;h2 id=&#34;gitlab-snippets-shortcode&#34;&gt;Gitlab Snippets Shortcode&lt;/h2&gt;
+&lt;script
     type=&#34;application/javascript&#34;
     src=&#34;https://gitlab.com/-/snippets/2349278.js&#34;
 &gt;&lt;/script&gt;
-&lt;h2 id=&#34;quote-shortcode&#34;&gt;Quote Shortcode
-&lt;/h2&gt;&lt;p&gt;Stack adds a &lt;code&gt;quote&lt;/code&gt; shortcode.  For example:&lt;/p&gt;
+&lt;h2 id=&#34;quote-shortcode&#34;&gt;Quote Shortcode&lt;/h2&gt;
+&lt;p&gt;Stack adds a &lt;code&gt;quote&lt;/code&gt; shortcode.  For example:&lt;/p&gt;
 &lt;blockquote&gt;
     &lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;&lt;span class=&#34;cite&#34;&gt;&lt;span&gt;― &lt;/span&gt;&lt;span&gt;A famous person, &lt;/span&gt;&lt;a href=&#34;https://en.wikipedia.org/wiki/Book&#34;&gt;&lt;cite&gt;The book they wrote&lt;/cite&gt;&lt;/a&gt;&lt;/span&gt;&lt;/blockquote&gt;
 &lt;blockquote&gt;
@@ -685,12 +685,12 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;li&gt;Arcanaque montibus omnes&lt;/li&gt;
 &lt;li&gt;Quidem et&lt;/li&gt;
 &lt;/ol&gt;
-&lt;h1 id=&#34;vagus-elidunt&#34;&gt;Vagus elidunt
-&lt;/h1&gt;&lt;p&gt;&lt;svg class=&#34;canon&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; overflow=&#34;visible&#34; viewBox=&#34;0 0 496 373&#34; height=&#34;373&#34; width=&#34;496&#34;&gt;&lt;g fill=&#34;none&#34;&gt;&lt;path stroke=&#34;#000&#34; stroke-width=&#34;.75&#34; d=&#34;M.599 372.348L495.263 1.206M.312.633l494.95 370.853M.312 372.633L247.643.92M248.502.92l246.76 370.566M330.828 123.869V1.134M330.396 1.134L165.104 124.515&#34;&gt;&lt;/path&gt;&lt;path stroke=&#34;#ED1C24&#34; stroke-width=&#34;.75&#34; d=&#34;M275.73 41.616h166.224v249.05H275.73zM54.478 41.616h166.225v249.052H54.478z&#34;&gt;&lt;/path&gt;&lt;path stroke=&#34;#000&#34; stroke-width=&#34;.75&#34; d=&#34;M.479.375h495v372h-495zM247.979.875v372&#34;&gt;&lt;/path&gt;&lt;ellipse cx=&#34;498.729&#34; cy=&#34;177.625&#34; rx=&#34;.75&#34; ry=&#34;1.25&#34;&gt;&lt;/ellipse&gt;&lt;ellipse cx=&#34;247.229&#34; cy=&#34;377.375&#34; rx=&#34;.75&#34; ry=&#34;1.25&#34;&gt;&lt;/ellipse&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/p&gt;
+&lt;h1 id=&#34;vagus-elidunt&#34;&gt;Vagus elidunt&lt;/h1&gt;
+&lt;p&gt;&lt;svg class=&#34;canon&#34; xmlns=&#34;http://www.w3.org/2000/svg&#34; overflow=&#34;visible&#34; viewBox=&#34;0 0 496 373&#34; height=&#34;373&#34; width=&#34;496&#34;&gt;&lt;g fill=&#34;none&#34;&gt;&lt;path stroke=&#34;#000&#34; stroke-width=&#34;.75&#34; d=&#34;M.599 372.348L495.263 1.206M.312.633l494.95 370.853M.312 372.633L247.643.92M248.502.92l246.76 370.566M330.828 123.869V1.134M330.396 1.134L165.104 124.515&#34;&gt;&lt;/path&gt;&lt;path stroke=&#34;#ED1C24&#34; stroke-width=&#34;.75&#34; d=&#34;M275.73 41.616h166.224v249.05H275.73zM54.478 41.616h166.225v249.052H54.478z&#34;&gt;&lt;/path&gt;&lt;path stroke=&#34;#000&#34; stroke-width=&#34;.75&#34; d=&#34;M.479.375h495v372h-495zM247.979.875v372&#34;&gt;&lt;/path&gt;&lt;ellipse cx=&#34;498.729&#34; cy=&#34;177.625&#34; rx=&#34;.75&#34; ry=&#34;1.25&#34;&gt;&lt;/ellipse&gt;&lt;ellipse cx=&#34;247.229&#34; cy=&#34;377.375&#34; rx=&#34;.75&#34; ry=&#34;1.25&#34;&gt;&lt;/ellipse&gt;&lt;/g&gt;&lt;/svg&gt;&lt;/p&gt;
 &lt;p&gt;&lt;a class=&#34;link&#34; href=&#34;https://en.wikipedia.org/wiki/Canons_of_page_construction#Van_de_Graaf_canon&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;The Van de Graaf Canon&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&#34;mane-refeci-capiebant-unda-mulcebat&#34;&gt;Mane refeci capiebant unda mulcebat
-&lt;/h2&gt;&lt;p&gt;Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat collumque vulnus est, parvas. &lt;strong&gt;Faces illo pepulere&lt;/strong&gt; tempus adest. Tendit flamma, ab opes virum sustinet, sidus sequendo urbis.&lt;/p&gt;
+&lt;h2 id=&#34;mane-refeci-capiebant-unda-mulcebat&#34;&gt;Mane refeci capiebant unda mulcebat&lt;/h2&gt;
+&lt;p&gt;Victa caducifer, malo vulnere contra dicere aurato, ludit regale, voca! Retorsit colit est profanae esse virescere furit nec; iaculi matertera et visa est, viribus. Divesque creatis, tecta novat collumque vulnus est, parvas. &lt;strong&gt;Faces illo pepulere&lt;/strong&gt; tempus adest. Tendit flamma, ab opes virum sustinet, sidus sequendo urbis.&lt;/p&gt;
 &lt;p&gt;Iubar proles corpore raptos vero auctor imperium; sed et huic: manus caeli Lelegas tu lux. Verbis obstitit intus oblectamina fixis linguisque ausus sperare Echionides cornuaque tenent clausit possit. Omnia putatur. Praeteritae refert ausus; ferebant e primus lora nutat, vici quae mea ipse. Et iter nil spectatae vulnus haerentia iuste et exercebat, sui et.&lt;/p&gt;
 &lt;p&gt;Eurytus Hector, materna ipsumque ut Politen, nec, nate, ignari, vernum cohaesit sequitur. Vel &lt;strong&gt;mitis temploque&lt;/strong&gt; vocatus, inque alis, &lt;em&gt;oculos nomen&lt;/em&gt; non silvis corpore coniunx ne displicet illa. Crescunt non unus, vidit visa quantum inmiti flumina mortis facto sic: undique a alios vincula sunt iactata abdita! Suspenderat ego fuit tendit: luna, ante urbem Propoetides &lt;strong&gt;parte&lt;/strong&gt;.&lt;/p&gt;</description>
         </item>
@@ -728,8 +728,8 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;p&gt;&lt;strong&gt;Note:&lt;/strong&gt; Use the online reference of &lt;a class=&#34;link&#34; href=&#34;https://katex.org/docs/supported.html&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;Supported TeX Functions&lt;/a&gt;&lt;/p&gt;
 
-&lt;h3 id=&#34;examples&#34;&gt;Examples
-&lt;/h3&gt;&lt;p&gt;Inline math: $\varphi = \dfrac{1+\sqrt5}{2}= 1.6180339887…$&lt;/p&gt;
+&lt;h3 id=&#34;examples&#34;&gt;Examples&lt;/h3&gt;
+&lt;p&gt;Inline math: $\varphi = \dfrac{1+\sqrt5}{2}= 1.6180339887…$&lt;/p&gt;
 &lt;p&gt;Block math:
 &lt;/p&gt;
 $$
@@ -766,6 +766,33 @@ $$</description>
 &lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
 &lt;/div&gt;
 &lt;/div&gt;</description>
+        </item>
+        <item>
+        <title></title>
+        <link>http://localhost:1313/p/</link>
+        <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/</guid>
+        <description>&lt;p&gt;Create a Website with the Hugo Framework&lt;/p&gt;
+&lt;p&gt;If you need to create a new Hugo site, you can follow these steps:&lt;/p&gt;
+&lt;p&gt;Create a new Hugo site: Open your terminal and run the following command to create a new Hugo site:&lt;/p&gt;
+&lt;p&gt;hugo new site my-new-site&lt;/p&gt;
+&lt;p&gt;Replace my-new-site with the desired name for your site.&lt;/p&gt;
+&lt;p&gt;Navigate to the new site directory:&lt;/p&gt;
+&lt;p&gt;cd my-new-site&lt;/p&gt;
+&lt;p&gt;Add a theme: You can add a theme to your site. For example, to add the Ananke theme, run:&lt;/p&gt;
+&lt;p&gt;git init
+git submodule add &lt;a class=&#34;link&#34; href=&#34;https://github.com/theNewDynamic/gohugo-theme-ananke.git&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://github.com/theNewDynamic/gohugo-theme-ananke.git&lt;/a&gt; themes/ananke
+echo &amp;rsquo;theme = &amp;ldquo;ananke&amp;rdquo;&amp;rsquo; &amp;raquo; config.toml&lt;/p&gt;
+&lt;p&gt;Create a new content file:&lt;/p&gt;
+&lt;p&gt;hugo new posts/my-first-post.md
+Start the Hugo server:&lt;/p&gt;
+&lt;p&gt;hugo serve -D&lt;/p&gt;
+&lt;p&gt;This will start the Hugo server and you can view your site at http://localhost:1313.&lt;/p&gt;
+&lt;p&gt;Add your content: Edit the content/posts/my-first-post.md file and add your content.&lt;/p&gt;
+&lt;p&gt;If you already have an existing site and just need to add it to your Hugo project, you can copy your existing content and configuration files into the new Hugo site directory you created.&lt;/p&gt;
+</description>
         </item>
         <item>
         <title>Contact</title>
