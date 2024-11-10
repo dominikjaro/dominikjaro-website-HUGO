@@ -2,16 +2,16 @@
 <html lang="en" dir="ltr">
     <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset='utf-8'>
 <meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="A practical guide on using cf-terraforming to automate Cloudflare resource management with Terraform">
-<title>Using cf-terraforming to Import Cloudflare Configurations into Terraform</title>
+<title>🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform</title>
 
 <link rel='canonical' href='http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/'>
 
-<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="Using cf-terraforming to Import Cloudflare Configurations into Terraform">
+<link rel="stylesheet" href="/scss/style.min.663803bebe609202d5b39d848f2d7c2dc8b598a2d879efa079fa88893d29c49c.css"><meta property='og:title' content="🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform">
 <meta property='og:description' content="A practical guide on using cf-terraforming to automate Cloudflare resource management with Terraform">
 <meta property='og:url' content='http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/'>
 <meta property='og:site_name' content='Dominik Jaro'>
-<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='terraform' /><meta property='article:tag' content='cloudflare' /><meta property='article:tag' content='automation' /><meta property='article:tag' content='devops' /><meta property='article:tag' content='iac' /><meta property='article:published_time' content='2024-11-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-11-10T00:00:00&#43;00:00'/><meta property='og:image' content='http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png' />
-<meta name="twitter:title" content="Using cf-terraforming to Import Cloudflare Configurations into Terraform">
+<meta property='og:type' content='article'><meta property='article:section' content='Post' /><meta property='article:tag' content='terraform' /><meta property='article:tag' content='cloudflare' /><meta property='article:tag' content='automation' /><meta property='article:published_time' content='2024-11-10T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2024-11-10T16:27:56&#43;00:00'/><meta property='og:image' content='http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png' />
+<meta name="twitter:title" content="🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform">
 <meta name="twitter:description" content="A practical guide on using cf-terraforming to automate Cloudflare resource management with Terraform"><meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:image" content='http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png' />
     </head>
@@ -215,7 +215,7 @@
         
         
         <li >
-            <a href='/archives/' >
+            <a href='/portfolio/' >
                 
                 
                 
@@ -322,20 +322,20 @@
         <div class="widget--toc">
             <nav id="TableOfContents">
   <ol>
-    <li><a href="#introduction">Introduction</a></li>
-    <li><a href="#installation">Installation</a></li>
-    <li><a href="#prerequisites">Prerequisites</a></li>
-    <li><a href="#setting-up-credentials">Setting Up Credentials</a></li>
-    <li><a href="#key-commands">Key Commands</a>
+    <li><a href="#-introduction">👋 Introduction</a></li>
+    <li><a href="#-installation">⚙️ Installation</a></li>
+    <li><a href="#-prerequisites">✅ Prerequisites</a></li>
+    <li><a href="#-setting-up-credentials">🔑 Setting Up Credentials</a></li>
+    <li><a href="#-key-commands">💻 Key Commands</a>
       <ol>
-        <li><a href="#generating-resources">Generating Resources</a></li>
-        <li><a href="#importing-resources">Importing Resources</a></li>
+        <li><a href="#-generating-resources">🛠️ Generating Resources</a></li>
+        <li><a href="#-importing-resources">⬇️ Importing Resources</a></li>
       </ol>
     </li>
-    <li><a href="#difficulties-that-i-faced">Difficulties That I Faced</a></li>
-    <li><a href="#pro-tips">Pro Tips</a></li>
-    <li><a href="#available-commands">Available Commands</a></li>
-    <li><a href="#conclusion">Conclusion</a></li>
+    <li><a href="#-difficulties-that-i-faced">🤔 Difficulties That I Faced</a></li>
+    <li><a href="#-pro-tips">💡 Pro Tips</a></li>
+    <li><a href="#-available-commands">🛠️ Available Commands</a></li>
+    <li><a href="#-conclusion">🎉 Conclusion</a></li>
   </ol>
 </nav>
         </div>
@@ -356,7 +356,7 @@
                         width="800" 
                         height="388" 
                         loading="lazy"
-                        alt="Featured image of post Using cf-terraforming to Import Cloudflare Configurations into Terraform" />
+                        alt="Featured image of post 🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform" />
                 
             </a>
         </div>
@@ -366,12 +366,12 @@
     
     <header class="article-category">
         
-            <a href="/categories/devops/" >
-                DevOps
+            <a href="/categories/cloud/" >
+                Cloud
             </a>
         
-            <a href="/categories/infrastructure-as-code/" >
-                Infrastructure as Code
+            <a href="/categories/iac/" >
+                IaC
             </a>
         
     </header>
@@ -379,7 +379,7 @@
 
     <div class="article-title-wrapper">
         <h2 class="article-title">
-            <a href="/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/">Using cf-terraforming to Import Cloudflare Configurations into Terraform</a>
+            <a href="/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/">🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform</a>
         </h2>
     
         
@@ -435,9 +435,9 @@
     <section class="article-content">
     
     
-    <h2 id="introduction">Introduction
+    <h2 id="-introduction">👋 Introduction
 </h2><p>In my role as a DevOps Engineer, I tackled the challenge of importing our existing Cloudflare configurations into Terraform. Manual migration would have been time-consuming and error-prone. <code>cf-terraforming</code>—a powerful tool that automates this process by generating Terraform resource code and fetching resource IDs directly from Cloudflare.</p>
-<h2 id="installation">Installation
+<h2 id="-installation">⚙️ Installation
 </h2><p>On macOS, installation is straightforward using Homebrew:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -449,14 +449,14 @@
 </span></span><span class="line"><span class="cl">brew install cloudflare/cloudflare/cf-terraforming
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="prerequisites">Prerequisites
+</div><h2 id="-prerequisites">✅ Prerequisites
 </h2><p>Before getting started, ensure you have:</p>
 <ul>
 <li>A Cloudflare account with defined resources</li>
 <li>Cloudflare API key</li>
 <li>An initialized Terraform directory</li>
 </ul>
-<h2 id="setting-up-credentials">Setting Up Credentials
+<h2 id="-setting-up-credentials">🔑 Setting Up Credentials
 </h2><p>Best practice is to store Cloudflare credentials as environment variables:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -470,8 +470,8 @@
 </span></span><span class="line"><span class="cl"><span class="nb">export</span> <span class="nv">CLOUDFLARE_API_KEY</span><span class="o">=</span><span class="s1">&#39;my_cloudflare_api_key&#39;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="key-commands">Key Commands
-</h2><h3 id="generating-resources">Generating Resources
+</div><h2 id="-key-commands">💻 Key Commands
+</h2><h3 id="-generating-resources">🛠️ Generating Resources
 </h3><p>To generate Terraform code for your Cloudflare resources:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -485,7 +485,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    --zone <span class="s2">&#34;my_zone_id&#34;</span> &gt;&gt; generated_resources.tf
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h3 id="importing-resources">Importing Resources
+</div><h3 id="-importing-resources">⬇️ Importing Resources
 </h3><p>To get import commands and resource IDs:</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -499,7 +499,7 @@
 </span></span></span><span class="line"><span class="cl"><span class="se"></span>    --zone <span class="s2">&#34;my_zone_id&#34;</span>
 </span></span></code></pre></td></tr></table>
 </div>
-</div><h2 id="difficulties-that-i-faced">Difficulties That I Faced
+</div><h2 id="-difficulties-that-i-faced">🤔 Difficulties That I Faced
 </h2><p>While using <code>cf-terraforming</code>, I encountered several challenges:</p>
 <ul>
 <li><strong>Resource Naming</strong>: The tool assigned resource IDs as names, leading to less readable Terraform code.</li>
@@ -510,13 +510,13 @@
 <li><strong>Renamed Resources</strong>: Updated the resource names in the Terraform files for clarity.</li>
 <li><strong>Custom Script for Resource IDs</strong>: Created a script to retrieve resource IDs and integrate them into the Terraform import commands.</li>
 </ul>
-<h2 id="pro-tips">Pro Tips
+<h2 id="-pro-tips">💡 Pro Tips
 </h2><ul>
 <li><strong>Resource Naming</strong>: <code>cf-terraforming</code> names resources based on IDs. Consider renaming them for better readability.</li>
 <li><strong>Version Control</strong>: Always commit your generated Terraform code to version control.</li>
 <li><strong>Validation</strong>: After importing, use <code>terraform plan</code> to verify the imported state matches the actual configuration.</li>
 </ul>
-<h2 id="available-commands">Available Commands
+<h2 id="-available-commands">🛠️ Available Commands
 </h2><p>The tool offers several useful commands:</p>
 <ul>
 <li><code>generate</code>: Create Terraform resource definitions</li>
@@ -524,7 +524,7 @@
 <li><code>version</code>: Check tool version</li>
 <li><code>help</code>: Access detailed help</li>
 </ul>
-<h2 id="conclusion">Conclusion
+<h2 id="-conclusion">🎉 Conclusion
 </h2><p><code>cf-terraforming</code> significantly streamlines the process of managing Cloudflare resources with Terraform. While it may require some post-processing for resource naming, it&rsquo;s an invaluable tool for DevOps automation.</p>
 
 </section>
@@ -539,10 +539,6 @@
             <a href="/tags/cloudflare/">Cloudflare</a>
         
             <a href="/tags/automation/">Automation</a>
-        
-            <a href="/tags/devops/">Devops</a>
-        
-            <a href="/tags/iac/">Iac</a>
         
     </section>
 
@@ -559,7 +555,19 @@
 
         <span>Licensed under CC BY-NC-SA 4.0</span>
     </section>
-    </footer>
+    <section class="article-lastmod">
+        <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-clock" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z"/>
+  <circle cx="12" cy="12" r="9" />
+  <polyline points="12 7 12 12 15 15" />
+</svg>
+
+
+
+        <span>
+            Last updated on Nov 10, 2024 16:27 UTC
+        </span>
+    </section></footer>
 
 
     
@@ -568,6 +576,39 @@
     
 
     
+
+<aside class="related-content--wrapper">
+    <h2 class="section-title">Related content</h2>
+    <div class="related-content">
+        <div class="flex article-list--tile">
+            
+                
+<article class="has-image">
+    <a href="/p/gcp-static-website/">
+        
+        
+            <div class="article-image">
+                <img src="/p/gcp-static-website/GCP-static-website-plan-Terraform.b2a29b487b90057ae5125debbb5af8bd_hu7483791356602505667.png" 
+                        width="250" 
+                        height="150" 
+                        loading="lazy"
+                        alt="Featured image of post GCP-static-website"
+                        
+                        data-hash="md5-sqKbSHuQBXrlEl3ru1r4vQ==">
+                
+            </div>
+        
+
+        <div class="article-details">
+            <h2 class="article-title">GCP-static-website</h2>
+        </div>
+    </a>
+</article>
+
+            
+        </div>
+    </div>
+</aside>
 
      
     

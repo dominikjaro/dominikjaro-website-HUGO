@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>IaC on Dominik Jaro</title>
+        <link>http://localhost:1313/categories/iac/</link>
+        <description>Recent content in IaC on Dominik Jaro</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Dominik Jaro</copyright>
+        <lastBuildDate>Sun, 10 Nov 2024 16:27:56 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/iac/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform</title>
+        <link>http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/</guid>
+        <description>&lt;img src="http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png" alt="Featured image of post 🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform" /&gt;&lt;h2 id=&#34;-introduction&#34;&gt;👋 Introduction
+&lt;/h2&gt;&lt;p&gt;In my role as a DevOps Engineer, I tackled the challenge of importing our existing Cloudflare configurations into Terraform. Manual migration would have been time-consuming and error-prone. &lt;code&gt;cf-terraforming&lt;/code&gt;—a powerful tool that automates this process by generating Terraform resource code and fetching resource IDs directly from Cloudflare.&lt;/p&gt;
+&lt;h2 id=&#34;-installation&#34;&gt;⚙️ Installation
+&lt;/h2&gt;&lt;p&gt;On macOS, installation is straightforward using Homebrew:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew tap cloudflare/cloudflare
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install cloudflare/cloudflare/cf-terraforming
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-prerequisites&#34;&gt;✅ Prerequisites
+&lt;/h2&gt;&lt;p&gt;Before getting started, ensure you have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A Cloudflare account with defined resources&lt;/li&gt;
+&lt;li&gt;Cloudflare API key&lt;/li&gt;
+&lt;li&gt;An initialized Terraform directory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-setting-up-credentials&#34;&gt;🔑 Setting Up Credentials
+&lt;/h2&gt;&lt;p&gt;Best practice is to store Cloudflare credentials as environment variables:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# When using API Key&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;CLOUDFLARE_EMAIL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;user@example.com&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;CLOUDFLARE_API_KEY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;my_cloudflare_api_key&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-key-commands&#34;&gt;💻 Key Commands
+&lt;/h2&gt;&lt;h3 id=&#34;-generating-resources&#34;&gt;🛠️ Generating Resources
+&lt;/h3&gt;&lt;p&gt;To generate Terraform code for your Cloudflare resources:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cf-terraforming generate &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --resource-type &lt;span class=&#34;s2&#34;&gt;&amp;#34;cloudflare_record&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --zone &lt;span class=&#34;s2&#34;&gt;&amp;#34;my_zone_id&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; generated_resources.tf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;-importing-resources&#34;&gt;⬇️ Importing Resources
+&lt;/h3&gt;&lt;p&gt;To get import commands and resource IDs:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cf-terraforming import &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --resource-type &lt;span class=&#34;s2&#34;&gt;&amp;#34;cloudflare_record&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --zone &lt;span class=&#34;s2&#34;&gt;&amp;#34;my_zone_id&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;-difficulties-that-i-faced&#34;&gt;🤔 Difficulties That I Faced
+&lt;/h2&gt;&lt;p&gt;While using &lt;code&gt;cf-terraforming&lt;/code&gt;, I encountered several challenges:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource Naming&lt;/strong&gt;: The tool assigned resource IDs as names, leading to less readable Terraform code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Import Limitations&lt;/strong&gt;: Some resources were not supported by &lt;code&gt;cf-terraforming&lt;/code&gt;, requiring manual handling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To overcome these issues, I:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Renamed Resources&lt;/strong&gt;: Updated the resource names in the Terraform files for clarity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom Script for Resource IDs&lt;/strong&gt;: Created a script to retrieve resource IDs and integrate them into the Terraform import commands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-pro-tips&#34;&gt;💡 Pro Tips
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource Naming&lt;/strong&gt;: &lt;code&gt;cf-terraforming&lt;/code&gt; names resources based on IDs. Consider renaming them for better readability.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version Control&lt;/strong&gt;: Always commit your generated Terraform code to version control.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation&lt;/strong&gt;: After importing, use &lt;code&gt;terraform plan&lt;/code&gt; to verify the imported state matches the actual configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-available-commands&#34;&gt;🛠️ Available Commands
+&lt;/h2&gt;&lt;p&gt;The tool offers several useful commands:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;generate&lt;/code&gt;: Create Terraform resource definitions&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;import&lt;/code&gt;: Generate import commands&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;version&lt;/code&gt;: Check tool version&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;help&lt;/code&gt;: Access detailed help&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-conclusion&#34;&gt;🎉 Conclusion
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;cf-terraforming&lt;/code&gt; significantly streamlines the process of managing Cloudflare resources with Terraform. While it may require some post-processing for resource naming, it&amp;rsquo;s an invaluable tool for DevOps automation.&lt;/p&gt;
+</description>
+        </item>
+        <item>
+        <title>GCP-static-website</title>
+        <link>http://localhost:1313/p/gcp-static-website/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/gcp-static-website/</guid>
+        <description>&lt;img src="http://localhost:1313/p/gcp-static-website/GCP-static-website-plan-Terraform.png" alt="Featured image of post GCP-static-website" /&gt;&lt;h2 id=&#34;architecture-&#34;&gt;Architecture 🏗
+&lt;/h2&gt;&lt;p&gt;Hey!👋 I am Dominik and this project is a Terraform configuration that creates a static website on Google Cloud Platform.☁
+The website is my personal portfolio and is hosted on a Cloud Storage bucket. The website is served using an HTTPS load balancer, which provides SSL termination. This ensures that all traffic to the website is secure and encrypted. The website is accessible at &lt;a class=&#34;link&#34; href=&#34;https://www.domssocial.co.uk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;www.domssocial.co.uk&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;The project also creates a DNS zone for the website, which is used to route traffic to the load balancer.
+And the Cloud CDN is used to cache the website content and improve performance.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; This website is currently not accessible as the infrastructure has been scaled down to minimize costs.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;❔&lt;code&gt;Why did I do this?&lt;/code&gt; I wanted to create a simple, cost-effective way to host a static website on Google Cloud Platform. I also wanted to learn how to use Terraform to create infrastructure on GCP.&lt;/p&gt;
+&lt;p&gt;🤷‍♂️&lt;code&gt;So what is a static website?&lt;/code&gt; A static website is a website that is made up of HTML, CSS, and JavaScript files. These files are served directly to the user&amp;rsquo;s web browser, without any server-side processing. This makes static websites fast and cost-effective to host.&lt;/p&gt;
+&lt;p&gt;☝Pre-requisites:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/?hl=en&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Cloud Platform&lt;/a&gt; account and a project&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.hashicorp.com/terraform/install&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;The Terraform CLI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;A text editor like &lt;a class=&#34;link&#34; href=&#34;https://code.visualstudio.com/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Visual Studio Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;1to-get-started-clone-the-project-repository-to-your-local-machine-and-change-directory-to-the-project-directory&#34;&gt;1.🌀To get started, clone the project repository to your local machine and change directory to the project directory
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;git clone https://github.com/dom-j/GCP-static-website.git
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cd GCP-static-website
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;2-set-up-your-google-cloud-platform-gcp&#34;&gt;2. Set up your Google Cloud Platform (GCP)
+&lt;/h3&gt;&lt;p&gt;Before you start configuring the project, you will need to set up your GCP account and create a project.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Cloud Platform (GCP)&lt;/a&gt; account&lt;/li&gt;
+&lt;li&gt;Create a new project&lt;/li&gt;
+&lt;li&gt;Create a service account for the project&lt;/li&gt;
+&lt;li&gt;DNS zone for the project&lt;/li&gt;
+&lt;li&gt;You will also need to register a domain name and configure it to use Google Cloud DNS - I used &lt;a class=&#34;link&#34; href=&#34;https://domains.squarespace.com/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://domains.squarespace.com/&lt;/a&gt; to register my domain, however you can use any domain registrar.&lt;/li&gt;
+&lt;li&gt;In GCP you will need to enable some API services like IAM Service Account Credentials API, Cloud DNS API&amp;hellip;etc&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;3-initialize-the-terraform-project&#34;&gt;3. Initialize the Terraform project
+&lt;/h3&gt;&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terraform init
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;4configuring-the-project&#34;&gt;4.Configuring the Project💻
+&lt;/h3&gt;&lt;p&gt;I created 3 Terraform .tf files to configure the project:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;main.tf&lt;/code&gt; - This file contains the main configuration for the project, including the Cloud Storage bucket, the IAM policy binding, the HTTP load balancer, and the Cloud CDN.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;variables.tf&lt;/code&gt; - This file contains the input variables for the project, including the project ID, the bucket name, and the index page.&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;provider.tf&lt;/code&gt; - This file contains the provider configuration for Google Cloud Platform.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;5-download-and-add-your-json-key-file-to-the-project&#34;&gt;5. Download and add your JSON key file to the project
+&lt;/h3&gt;&lt;p&gt;The service account key file is used to authenticate Terraform to your GCP account. You can create a service account and download the key file by following the instructions in the &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/iam/docs/creating-managing-service-account-keys&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;GCP documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;h3 id=&#34;6-creating-the-static-website&#34;&gt;6. Creating the Static Website
+&lt;/h3&gt;&lt;p&gt;Once you have configured the project, you can upload the Terraform configuration to Google Cloud Platform by running the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terraform plan
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;To check the changes that will be made to your infrastructure.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-fallback&#34; data-lang=&#34;fallback&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terraform apply
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;When prompted, review the changes and type &lt;code&gt;yes&lt;/code&gt; to confirm that you want to apply the changes.&lt;/p&gt;
+&lt;p&gt;Terraform will then create the following resources:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A Cloud Storage bucket&lt;/li&gt;
+&lt;li&gt;An IAM policy binding that grants the storage.objectViewer role to the allUsers group&lt;/li&gt;
+&lt;li&gt;Cloud CDN for the bucket&lt;/li&gt;
+&lt;li&gt;SSL certificate for the domain&lt;/li&gt;
+&lt;li&gt;An HTTPS load balancer&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;7-testing-the-static-website&#34;&gt;7. Testing the Static Website👏
+&lt;/h3&gt;&lt;p&gt;Once the static website has been created, you can test it by visiting the following URL: &amp;lt;www.domssocial.co.uk&amp;gt;&lt;/p&gt;
+&lt;h3 id=&#34;how-it-works&#34;&gt;How it works🧮
+&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;When a user visits the website, the following steps occur
+
+1. Cloud DNS: The user enters your domain name in their browser. Cloud DNS  translates the domain name to the IP address of the Cloud CDN edge location closest to the user.
+2.Cloud CDN Caching: The user&#39;s browser connects to the nearest Cloud CDN edge location.  Cloud CDN checks its cache for the requested content (static files like images, HTML, CSS, JavaScript).
+3.Cache Hit: If the content is already cached at the edge location, Cloud CDN serves the content directly to the user&#39;s browser, resulting in faster delivery due to reduced latency.
+4.Load Balancer: If Cloud CDN doesn&#39;t have the requested content cached, it forwards the request to the Load Balancer.
+5.The Load Balancer distributes the request traffic across your backends, which are the Cloud Storage buckets that host your website content.
+&lt;/code&gt;&lt;/pre&gt;
+&lt;h3 id=&#34;the-frontend-design-of-the-website&#34;&gt;The Frontend design of the website
+&lt;/h3&gt;&lt;p&gt;The frontend of the website is a HTML, CSS and JS files. I downloaded the template from &lt;a class=&#34;link&#34; href=&#34;https://html5up.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://html5up.net/&lt;/a&gt;, and modified it to suit my needs.&lt;/p&gt;
+&lt;h3 id=&#34;skills-gained&#34;&gt;Skills gained📚
+&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;1. How to use Terraform to create infrastructure on Google Cloud Platform
+2. How to create a static website on Google Cloud Platform
+3. How to use Cloud Storage, Cloud CDN, and an HTTPS load balancer to host a static website
+4. How to use and create Cloud DNS zones
+5. How to use a service account key file to authenticate Terraform to Google Cloud Platform
+6. How to create a SSL certificate for a domain
+7. Gained some experience with HTML, CSS and JS
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>

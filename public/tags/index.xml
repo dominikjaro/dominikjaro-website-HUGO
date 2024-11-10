@@ -7,7 +7,39 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Dominik Jaro</copyright>
-        <lastBuildDate>Sat, 02 Nov 2024 19:23:25 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 10 Nov 2024 16:27:56 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Automation</title>
+        <link>http://localhost:1313/tags/automation/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/automation/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Cloudflare</title>
+        <link>http://localhost:1313/tags/cloudflare/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/cloudflare/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>GCP</title>
+        <link>http://localhost:1313/tags/gcp/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/gcp/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Terraform</title>
+        <link>http://localhost:1313/tags/terraform/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/tags/terraform/</guid>
+        <description></description>
+        </item>
+        <item>
         <title>Css</title>
         <link>http://localhost:1313/tags/css/</link>
         <pubDate>Mon, 11 Mar 2019 00:00:00 +0000</pubDate>

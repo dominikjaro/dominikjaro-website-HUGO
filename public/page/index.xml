@@ -7,7 +7,26 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Dominik Jaro</copyright>
-        <lastBuildDate>Tue, 05 Nov 2024 16:26:58 +0000</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Sun, 10 Nov 2024 16:27:56 +0000</lastBuildDate><atom:link href="http://localhost:1313/page/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Blog</title>
+        <link>http://localhost:1313/blog/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/blog/</guid>
+        <description></description>
+        </item>
+        <item>
+        <title>Portfolio</title>
+        <link>http://localhost:1313/portfolio/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/portfolio/</guid>
+        <description>&lt;h1 id=&#34;portfolio&#34;&gt;Portfolio
+&lt;/h1&gt;&lt;p&gt;This page is currently under construction. 🚧&lt;/p&gt;
+&lt;p&gt;Check back soon to see my completed portfolio of projects and work samples!&lt;/p&gt;
+</description>
+        </item>
+        <item>
         <title>About</title>
         <link>http://localhost:1313/about/</link>
         <pubDate>Tue, 05 Nov 2024 00:00:00 +0000</pubDate>
@@ -15,22 +34,6 @@
         <guid>http://localhost:1313/about/</guid>
         <description>&lt;p&gt;(Add some content about myself)&lt;/p&gt;
 </description>
-        </item>
-        <item>
-        <title>Blog</title>
-        <link>http://localhost:1313/blog/</link>
-        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/blog/</guid>
-        <description></description>
-        </item>
-        <item>
-        <title>Portfolio</title>
-        <link>http://localhost:1313/archives/</link>
-        <pubDate>Tue, 28 May 2019 00:00:00 +0000</pubDate>
-        
-        <guid>http://localhost:1313/archives/</guid>
-        <description></description>
         </item>
         <item>
         <title>Contact</title>

@@ -158,8 +158,8 @@ params:
             id:
     widgets:
         homepage:
-            - type: search
-            - type: archives
+            - type: about
+            - type: blog
               params:
                   limit: 5
             - type: categories
