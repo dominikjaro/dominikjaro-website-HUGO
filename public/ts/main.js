@@ -423,12 +423,10 @@
       }
       aElement.addEventListener("click", (clickEvent) => {
         clickEvent.preventDefault();
-        const targetId = aElement.getAttribute("href").substring(1), target = document.getElementById(targetId), offset = target.getBoundingClientRect().top - document.documentElement.getBoundingClientRect().top;
+        let targetId = aElement.getAttribute("href").substring(1);
+        let target = document.querySelector(`#${targetId.replace(":", "\\:")}`);
         window.history.pushState({}, "", aElement.getAttribute("href"));
-        scrollTo({
-          top: offset,
-          behavior: "smooth"
-        });
+        scrollTo({ top: target.offsetTop, behavior: "smooth" });
       });
     });
   }
