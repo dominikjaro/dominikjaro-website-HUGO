@@ -6,7 +6,7 @@
     <lastmod>2024-11-05T00:00:00+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/page/</loc>
-    <lastmod>2024-11-05T00:00:00+00:00</lastmod>
+    <lastmod>2024-11-05T16:26:58+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
     <lastmod>2024-11-02T19:23:25+00:00</lastmod>
@@ -20,14 +20,11 @@
     <loc>http://localhost:1313/categories/%E6%B5%8B%E8%AF%95/</loc>
     <lastmod>2024-11-02T19:23:25+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/archives/</loc>
-    <lastmod>2024-11-02T19:23:25+00:00</lastmod>
+    <loc>http://localhost:1313/blog/</loc>
+    <lastmod>2024-11-05T16:26:58+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/archives/</loc>
-    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/archives/</loc>
-    <lastmod>2019-05-28T00:00:00+00:00</lastmod>
+    <lastmod>2024-11-05T16:26:58+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/css/</loc>
     <lastmod>2024-11-02T19:23:25+00:00</lastmod>
@@ -87,9 +84,7 @@
     <lastmod>2024-11-02T19:23:25+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/contact/</loc>
-  </url><url>
-    <loc>http://localhost:1313/links/</loc>
-    <lastmod>2024-11-02T19:23:25+00:00</lastmod>
+    <lastmod>2024-11-05T16:26:58+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/search/</loc>
     <lastmod>2024-11-02T19:23:25+00:00</lastmod>

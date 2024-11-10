@@ -24,7 +24,8 @@ languages:
         weight: 1
         params:
             sidebar:
-                subtitle: Cloud Engineer
+                subtitle: DevOps | Cloud Engineer | London, Uk
+                
 services:
     # Change it to your Disqus shortname before using
     disqus:
@@ -61,7 +62,7 @@ params:
         avatar:
             enabled: true
             local: true
-            src: img/avatar.png
+            src: img/dom-photo.png
 
     article:
         math: false

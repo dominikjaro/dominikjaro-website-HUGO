@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>Cloudflare on Dominik Jaro</title>
+        <link>http://localhost:1313/tags/cloudflare/</link>
+        <description>Recent content in Cloudflare on Dominik Jaro</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>en</language>
+        <copyright>Dominik Jaro</copyright>
+        <lastBuildDate>Sun, 10 Nov 2024 00:00:00 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cloudflare/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Using cf-terraforming to Import Cloudflare Configurations into Terraform</title>
+        <link>http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/</link>
+        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/</guid>
+        <description>&lt;img src="http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png" alt="Featured image of post Using cf-terraforming to Import Cloudflare Configurations into Terraform" /&gt;&lt;h2 id=&#34;introduction&#34;&gt;Introduction
+&lt;/h2&gt;&lt;p&gt;In my role as a DevOps Engineer, I tackled the challenge of importing our existing Cloudflare configurations into Terraform. Manual migration would have been time-consuming and error-prone. &lt;code&gt;cf-terraforming&lt;/code&gt;—a powerful tool that automates this process by generating Terraform resource code and fetching resource IDs directly from Cloudflare.&lt;/p&gt;
+&lt;h2 id=&#34;installation&#34;&gt;Installation
+&lt;/h2&gt;&lt;p&gt;On macOS, installation is straightforward using Homebrew:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew tap cloudflare/cloudflare
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;brew install cloudflare/cloudflare/cf-terraforming
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;prerequisites&#34;&gt;Prerequisites
+&lt;/h2&gt;&lt;p&gt;Before getting started, ensure you have:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A Cloudflare account with defined resources&lt;/li&gt;
+&lt;li&gt;Cloudflare API key&lt;/li&gt;
+&lt;li&gt;An initialized Terraform directory&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;setting-up-credentials&#34;&gt;Setting Up Credentials
+&lt;/h2&gt;&lt;p&gt;Best practice is to store Cloudflare credentials as environment variables:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;c1&#34;&gt;# When using API Key&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;CLOUDFLARE_EMAIL&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;user@example.com&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;nb&#34;&gt;export&lt;/span&gt; &lt;span class=&#34;nv&#34;&gt;CLOUDFLARE_API_KEY&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;=&lt;/span&gt;&lt;span class=&#34;s1&#34;&gt;&amp;#39;my_cloudflare_api_key&amp;#39;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;key-commands&#34;&gt;Key Commands
+&lt;/h2&gt;&lt;h3 id=&#34;generating-resources&#34;&gt;Generating Resources
+&lt;/h3&gt;&lt;p&gt;To generate Terraform code for your Cloudflare resources:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cf-terraforming generate &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --resource-type &lt;span class=&#34;s2&#34;&gt;&amp;#34;cloudflare_record&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --zone &lt;span class=&#34;s2&#34;&gt;&amp;#34;my_zone_id&amp;#34;&lt;/span&gt; &amp;gt;&amp;gt; generated_resources.tf
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h3 id=&#34;importing-resources&#34;&gt;Importing Resources
+&lt;/h3&gt;&lt;p&gt;To get import commands and resource IDs:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;cf-terraforming import &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --resource-type &lt;span class=&#34;s2&#34;&gt;&amp;#34;cloudflare_record&amp;#34;&lt;/span&gt; &lt;span class=&#34;se&#34;&gt;\
+&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;se&#34;&gt;&lt;/span&gt;    --zone &lt;span class=&#34;s2&#34;&gt;&amp;#34;my_zone_id&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;h2 id=&#34;difficulties-that-i-faced&#34;&gt;Difficulties That I Faced
+&lt;/h2&gt;&lt;p&gt;While using &lt;code&gt;cf-terraforming&lt;/code&gt;, I encountered several challenges:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource Naming&lt;/strong&gt;: The tool assigned resource IDs as names, leading to less readable Terraform code.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Import Limitations&lt;/strong&gt;: Some resources were not supported by &lt;code&gt;cf-terraforming&lt;/code&gt;, requiring manual handling.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;To overcome these issues, I:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Renamed Resources&lt;/strong&gt;: Updated the resource names in the Terraform files for clarity.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Custom Script for Resource IDs&lt;/strong&gt;: Created a script to retrieve resource IDs and integrate them into the Terraform import commands.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;pro-tips&#34;&gt;Pro Tips
+&lt;/h2&gt;&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Resource Naming&lt;/strong&gt;: &lt;code&gt;cf-terraforming&lt;/code&gt; names resources based on IDs. Consider renaming them for better readability.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Version Control&lt;/strong&gt;: Always commit your generated Terraform code to version control.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Validation&lt;/strong&gt;: After importing, use &lt;code&gt;terraform plan&lt;/code&gt; to verify the imported state matches the actual configuration.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;available-commands&#34;&gt;Available Commands
+&lt;/h2&gt;&lt;p&gt;The tool offers several useful commands:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;generate&lt;/code&gt;: Create Terraform resource definitions&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;import&lt;/code&gt;: Generate import commands&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;version&lt;/code&gt;: Check tool version&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;help&lt;/code&gt;: Access detailed help&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;conclusion&#34;&gt;Conclusion
+&lt;/h2&gt;&lt;p&gt;&lt;code&gt;cf-terraforming&lt;/code&gt; significantly streamlines the process of managing Cloudflare resources with Terraform. While it may require some post-processing for resource naming, it&amp;rsquo;s an invaluable tool for DevOps automation.&lt;/p&gt;
+</description>
+        </item>
+        
+    </channel>
+</rss>
