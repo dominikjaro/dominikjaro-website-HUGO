@@ -1,6 +1,6 @@
 ---
 title: "🚀 `cf-terraforming` - the tool to Import Cloudflare configurations into Terraform"
-date: 2024-11-10
+date: 2024-08-21
 description: "A practical guide on using cf-terraforming to automate Cloudflare resource management with Terraform"
 categories: ["Cloud", "IaC"]
 tags: ["terraform", "cloudflare", "automation"]
