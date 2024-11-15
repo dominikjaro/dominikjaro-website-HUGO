@@ -1,5 +1,5 @@
 (() => {
-  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website/themes/hugo-theme-stack/assets/ts/gallery.ts
+  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website-HUGO/themes/hugo-theme-stack/assets/ts/gallery.ts
   var StackGallery = class _StackGallery {
     galleryUID;
     items = [];
@@ -118,7 +118,7 @@
   };
   var gallery_default = StackGallery;
 
-  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website/themes/hugo-theme-stack/assets/ts/color.ts
+  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website-HUGO/themes/hugo-theme-stack/assets/ts/color.ts
   var colorsCache = {};
   if (localStorage.hasOwnProperty("StackColorsCache")) {
     try {
@@ -151,7 +151,7 @@
     return colorsCache[key];
   }
 
-  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website/themes/hugo-theme-stack/assets/ts/menu.ts
+  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website-HUGO/themes/hugo-theme-stack/assets/ts/menu.ts
   var slideUp = (target, duration = 500) => {
     target.classList.add("transiting");
     target.style.transitionProperty = "height, margin, padding";
@@ -223,7 +223,7 @@
     }
   }
 
-  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website/themes/hugo-theme-stack/assets/ts/createElement.ts
+  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website-HUGO/themes/hugo-theme-stack/assets/ts/createElement.ts
   function createElement(tag, attrs, children) {
     var element = document.createElement(tag);
     for (let name in attrs) {
@@ -250,7 +250,7 @@
   }
   var createElement_default = createElement;
 
-  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website/themes/hugo-theme-stack/assets/ts/colorScheme.ts
+  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website-HUGO/themes/hugo-theme-stack/assets/ts/colorScheme.ts
   var StackColorScheme = class {
     localStorageKey = "StackColorScheme";
     currentScheme;
@@ -258,6 +258,10 @@
     constructor(toggleEl) {
       this.bindMatchMedia();
       this.currentScheme = this.getSavedScheme();
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches === true)
+        this.systemPreferScheme = "dark";
+      else
+        this.systemPreferScheme = "light";
       this.dispatchEvent(document.documentElement.dataset.scheme);
       if (toggleEl)
         this.bindClick(toggleEl);
@@ -316,7 +320,7 @@
   };
   var colorScheme_default = StackColorScheme;
 
-  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website/themes/hugo-theme-stack/assets/ts/scrollspy.ts
+  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website-HUGO/themes/hugo-theme-stack/assets/ts/scrollspy.ts
   function debounced(func) {
     let timeout;
     return () => {
@@ -413,7 +417,7 @@
     window.addEventListener("resize", debounced(resizeHandler));
   }
 
-  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website/themes/hugo-theme-stack/assets/ts/smoothAnchors.ts
+  // ns-hugo:/Users/dominikjaro/Documents/Developer/Personal-Projects/dominikjaro-website-HUGO/themes/hugo-theme-stack/assets/ts/smoothAnchors.ts
   var anchorLinksQuery = "a[href]";
   function setupSmoothAnchors() {
     document.querySelectorAll(anchorLinksQuery).forEach((aElement) => {
@@ -423,10 +427,12 @@
       }
       aElement.addEventListener("click", (clickEvent) => {
         clickEvent.preventDefault();
-        let targetId = aElement.getAttribute("href").substring(1);
-        let target = document.querySelector(`#${targetId.replace(":", "\\:")}`);
+        const targetId = decodeURI(aElement.getAttribute("href").substring(1)), target = document.getElementById(targetId), offset = target.getBoundingClientRect().top - document.documentElement.getBoundingClientRect().top;
         window.history.pushState({}, "", aElement.getAttribute("href"));
-        scrollTo({ top: target.offsetTop, behavior: "smooth" });
+        scrollTo({
+          top: offset,
+          behavior: "smooth"
+        });
       });
     });
   }
