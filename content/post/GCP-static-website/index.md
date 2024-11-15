@@ -1,5 +1,5 @@
 ---
-title: "GCP-static-website"
+title: "My first static website on Google Cloud Platform using Terraform"
 date: 2024-11-10
 description: "A step-by-step guide to creating a static website on Google Cloud Platform using Terraform, Cloud Storage, Cloud CDN, and HTTPS load balancer"
 categories: ["Cloud","DevOps","IaC"]
