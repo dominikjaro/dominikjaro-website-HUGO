@@ -158,8 +158,8 @@ params:
             id:
     widgets:
         homepage:
-            - type: about
-            - type: blog
+            - type: search
+            - type: archives
               params:
                   limit: 5
             - type: categories
@@ -258,4 +258,5 @@ markup:
         lineNos: true
         lineNumbersInTable: true
         tabWidth: 4
+
         

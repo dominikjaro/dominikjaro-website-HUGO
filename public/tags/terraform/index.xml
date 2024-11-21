@@ -7,13 +7,13 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Dominik Jaro</copyright>
-        <lastBuildDate>Sun, 10 Nov 2024 16:27:56 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/terraform/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform</title>
-        <link>http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/</link>
-        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        <lastBuildDate>Fri, 15 Nov 2024 08:55:14 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/terraform/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>🚀 `cf-terraforming` - the tool to Import Cloudflare configurations into Terraform</title>
+        <link>http://localhost:1313/p/cf-terraforming-the-tool-to-import-cloudflare-configurations-into-terraform/</link>
+        <pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/</guid>
-        <description>&lt;img src="http://localhost:1313/p/using-cf-terraforming-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png" alt="Featured image of post 🚀 Using cf-terraforming to Import Cloudflare Configurations into Terraform" /&gt;&lt;h2 id=&#34;-introduction&#34;&gt;👋 Introduction
+        <guid>http://localhost:1313/p/cf-terraforming-the-tool-to-import-cloudflare-configurations-into-terraform/</guid>
+        <description>&lt;img src="http://localhost:1313/p/cf-terraforming-the-tool-to-import-cloudflare-configurations-into-terraform/terraform-cloudflare.png" alt="Featured image of post 🚀 `cf-terraforming` - the tool to Import Cloudflare configurations into Terraform" /&gt;&lt;h2 id=&#34;-introduction&#34;&gt;👋 Introduction
 &lt;/h2&gt;&lt;p&gt;In my role as a DevOps Engineer, I tackled the challenge of importing our existing Cloudflare configurations into Terraform. Manual migration would have been time-consuming and error-prone. &lt;code&gt;cf-terraforming&lt;/code&gt;—a powerful tool that automates this process by generating Terraform resource code and fetching resource IDs directly from Cloudflare.&lt;/p&gt;
 &lt;h2 id=&#34;-installation&#34;&gt;⚙️ Installation
 &lt;/h2&gt;&lt;p&gt;On macOS, installation is straightforward using Homebrew:&lt;/p&gt;
@@ -107,12 +107,12 @@
 </description>
         </item>
         <item>
-        <title>GCP-static-website</title>
-        <link>http://localhost:1313/p/gcp-static-website/</link>
-        <pubDate>Sun, 10 Nov 2024 00:00:00 +0000</pubDate>
+        <title>My first static website on Google Cloud Platform using Terraform</title>
+        <link>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-using-terraform/</link>
+        <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/p/gcp-static-website/</guid>
-        <description>&lt;img src="http://localhost:1313/p/gcp-static-website/GCP-static-website-plan-Terraform.png" alt="Featured image of post GCP-static-website" /&gt;&lt;h2 id=&#34;architecture-&#34;&gt;Architecture 🏗
+        <guid>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-using-terraform/</guid>
+        <description>&lt;img src="http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-using-terraform/GCP-static-website-plan-Terraform.png" alt="Featured image of post My first static website on Google Cloud Platform using Terraform" /&gt;&lt;h2 id=&#34;architecture-&#34;&gt;Architecture 🏗
 &lt;/h2&gt;&lt;p&gt;Hey!👋 I am Dominik and this project is a Terraform configuration that creates a static website on Google Cloud Platform.☁
 The website is my personal portfolio and is hosted on a Cloud Storage bucket. The website is served using an HTTPS load balancer, which provides SSL termination. This ensures that all traffic to the website is secure and encrypted. The website is accessible at &lt;a class=&#34;link&#34; href=&#34;https://www.domssocial.co.uk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;www.domssocial.co.uk&lt;/a&gt;.&lt;/p&gt;
