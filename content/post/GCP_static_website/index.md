@@ -1,5 +1,5 @@
 ---
-title: "My first static website on Google Cloud Platform using Terraform"
+title: "My first static website 🌐 on Google Cloud Platform ☁️ using Terraform 🔨"
 date: 2024-02-17
 description: "A step-by-step guide to creating a static website on Google Cloud Platform using Terraform, Cloud Storage, Cloud CDN, and HTTPS load balancer"
 categories: ["Cloud","DevOps","IaC"]
@@ -96,13 +96,13 @@ Once the static website has been created, you can test it by visiting the follow
 
 ### How it works🧮
 
-    When a user visits the website, the following steps occur
+When a user visits the website, the following steps occur:
 
-    1. Cloud DNS: The user enters your domain name in their browser. Cloud DNS  translates the domain name to the IP address of the Cloud CDN edge location closest to the user.
-    2.Cloud CDN Caching: The user's browser connects to the nearest Cloud CDN edge location.  Cloud CDN checks its cache for the requested content (static files like images, HTML, CSS, JavaScript).
-    3.Cache Hit: If the content is already cached at the edge location, Cloud CDN serves the content directly to the user's browser, resulting in faster delivery due to reduced latency.
-    4.Load Balancer: If Cloud CDN doesn't have the requested content cached, it forwards the request to the Load Balancer.
-    5.The Load Balancer distributes the request traffic across your backends, which are the Cloud Storage buckets that host your website content.
+1. **Cloud DNS**: The user enters your domain name in their browser. Cloud DNS translates the domain name to the IP address of the Cloud CDN edge location closest to the user.
+2. **Cloud CDN Caching**: The user's browser connects to the nearest Cloud CDN edge location. Cloud CDN checks its cache for the requested content (static files like images, HTML, CSS, JavaScript).
+3. **Cache Hit**: If the content is already cached at the edge location, Cloud CDN serves the content directly to the user's browser, resulting in faster delivery due to reduced latency.
+4. **Load Balancer**: If Cloud CDN doesn't have the requested content cached, it forwards the request to the Load Balancer.
+5. **Backends**: The Load Balancer distributes the request traffic across your backends, which are the Cloud Storage buckets that host your website content.
 
 ### The Frontend design of the website
 
@@ -110,10 +110,10 @@ The frontend of the website is a HTML, CSS and JS files. I downloaded the templa
 
 ### Skills gained📚
 
-    1. How to use Terraform to create infrastructure on Google Cloud Platform
-    2. How to create a static website on Google Cloud Platform
-    3. How to use Cloud Storage, Cloud CDN, and an HTTPS load balancer to host a static website
-    4. How to use and create Cloud DNS zones
-    5. How to use a service account key file to authenticate Terraform to Google Cloud Platform
-    6. How to create a SSL certificate for a domain
-    7. Gained some experience with HTML, CSS and JS
+1. How to use Terraform to create infrastructure on Google Cloud Platform
+2. How to create a static website on Google Cloud Platform
+3. How to use Cloud Storage, Cloud CDN, and an HTTPS load balancer to host a static website
+4. How to use and create Cloud DNS zones
+5. How to use a service account key file to authenticate Terraform to Google Cloud Platform
+6. How to create an SSL certificate for a domain
+7. Gained some experience with HTML, CSS and JS
