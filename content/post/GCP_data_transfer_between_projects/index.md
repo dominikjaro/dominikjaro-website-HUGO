@@ -1,7 +1,7 @@
 ---
 title: "🌥️ Moving data between GCP projects/buckets 🌐"
 date: 2024-09-30
-description: "I was tasked with setting up a new development environment for testing and development. It lacked the necessary data, so I had to carefully transfer it from one project to another. This document outlines my experience and the steps I took to transfer data between Google Cloud Projects, including Cloud Storage buckets, Firestore (Datastore), and BigQuery datasets. This guide can be helpful when creating a new environment and seeding it with data from an existing project."
+description: "I was tasked with setting up a new development environment for testing and development. It lacked the necessary data, so I had to carefully transfer it from one project to another. This document outlines my experience and the steps I took to transfer data between `Google Cloud Projects`, including `Cloud Storage buckets`, `Firestore (Datastore)`, and `BigQuery datasets`. This guide can be helpful when creating a new environment and seeding it with data from an existing project."
 categories: ["Cloud","shell"]
 tags: ["GCP","Automation","shell"]
 image: "GCP buckets.png"
