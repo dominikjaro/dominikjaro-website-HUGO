@@ -7,7 +7,7 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Dominik Jaro</copyright>
-        <lastBuildDate>Fri, 15 Nov 2024 08:55:14 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cloudflare/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Thu, 21 Nov 2024 18:00:49 +0000</lastBuildDate><atom:link href="http://localhost:1313/tags/cloudflare/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>🚀 `cf-terraforming` - the tool to Import Cloudflare configurations into Terraform</title>
         <link>http://localhost:1313/p/cf-terraforming-the-tool-to-import-cloudflare-configurations-into-terraform/</link>
         <pubDate>Wed, 21 Aug 2024 00:00:00 +0000</pubDate>

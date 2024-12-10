@@ -14,41 +14,62 @@
     <loc>http://localhost:1313/about/</loc>
     <lastmod>2024-11-05T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/cf-terraforming-the-tool-to-import-cloudflare-configurations-into-terraform/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
-  </url><url>
     <loc>http://localhost:1313/tags/automation/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/cloud/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/cloudflare/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/categories/iac/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/post/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
-  </url><url>
-    <loc>http://localhost:1313/tags/terraform/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/categories/devops/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/tags/gcp/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-using-terraform/</loc>
-    <lastmod>2024-11-15T08:55:14+00:00</lastmod>
+    <loc>http://localhost:1313/post/</loc>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/shell/</loc>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/shell/</loc>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/%EF%B8%8F-moving-data-between-gcp-projects/buckets/</loc>
+    <lastmod>2024-12-10T08:35:47+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/cf-terraforming-the-tool-to-import-cloudflare-configurations-into-terraform/</loc>
+    <lastmod>2024-11-21T18:00:49+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/cloudflare/</loc>
+    <lastmod>2024-11-21T18:00:49+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/iac/</loc>
+    <lastmod>2024-11-21T18:35:22+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/tags/terraform/</loc>
+    <lastmod>2024-11-21T18:35:22+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/development/</loc>
+    <lastmod>2024-11-21T18:29:48+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/categories/kubernetes/</loc>
+    <lastmod>2024-11-21T18:29:48+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/kubernetes-sampleapp-microservice-deployment-on-gcp-with-terraform/</loc>
+    <lastmod>2024-11-21T18:29:48+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/%EF%B8%8F-gcp-cloud-resume-api-challenge/</loc>
+    <lastmod>2024-11-21T18:35:22+00:00</lastmod>
+  </url><url>
+    <loc>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-%EF%B8%8F-using-terraform/</loc>
+    <lastmod>2024-11-21T18:33:15+00:00</lastmod>
   </url><url>
     <loc>http://localhost:1313/p/test-chinese/</loc>
     <lastmod>2024-11-02T19:23:25+00:00</lastmod>

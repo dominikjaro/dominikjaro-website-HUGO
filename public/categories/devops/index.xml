@@ -7,13 +7,473 @@
         <generator>Hugo -- gohugo.io</generator>
         <language>en</language>
         <copyright>Dominik Jaro</copyright>
-        <lastBuildDate>Fri, 15 Nov 2024 08:55:14 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/devops/index.xml" rel="self" type="application/rss+xml" /><item>
-        <title>My first static website on Google Cloud Platform using Terraform</title>
-        <link>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-using-terraform/</link>
+        <lastBuildDate>Tue, 10 Dec 2024 08:35:47 +0000</lastBuildDate><atom:link href="http://localhost:1313/categories/devops/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>🌥️ **Moving data between GCP projects/buckets** 🌐</title>
+        <link>http://localhost:1313/p/%EF%B8%8F-moving-data-between-gcp-projects/buckets/</link>
+        <pubDate>Mon, 30 Sep 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/%EF%B8%8F-moving-data-between-gcp-projects/buckets/</guid>
+        <description>&lt;h2 id=&#34;-moving-data-between-gcp-projects-ie-refreshing-one-project-from-another&#34;&gt;🚀 &lt;strong&gt;Moving data between GCP projects (i.e. refreshing one project from another)&lt;/strong&gt;
+&lt;/h2&gt;&lt;p&gt;This guide provides a step-by-step process to transfer data from one Google Cloud Project to another.&lt;/p&gt;
+&lt;p&gt;This approach is primarily useful when creating a new environment (e.g., for development) and seeding it with data from an existing project.&lt;/p&gt;
+&lt;h3 id=&#34;-objective&#34;&gt;🎯 &lt;strong&gt;Objective:&lt;/strong&gt;
+&lt;/h3&gt;&lt;p&gt;Transfer data from a source GCP project to a destination project, including Cloud Storage buckets, Firestore (Datastore), and BigQuery datasets.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Create in Terraform:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Buckets&lt;/li&gt;
+&lt;li&gt;BQ Datasets&lt;/li&gt;
+&lt;li&gt;Datastore db&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;-pre-requisites&#34;&gt;🛠️ &lt;strong&gt;Pre-Requisites:&lt;/strong&gt;
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Access to both source and destination GCP projects.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Gsuite alias account&lt;/strong&gt; for managing the data transfer securely.&lt;/li&gt;
+&lt;li&gt;The scripts you will need - [PATH_TO_THE_SCRIPTS]&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;-instructions&#34;&gt;📋 &lt;strong&gt;Instructions&lt;/strong&gt;
+&lt;/h2&gt;&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create a GSuite Alias Account&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Set up a &lt;strong&gt;GSuite alias account&lt;/strong&gt; that will be used solely for this data transfer.&lt;/li&gt;
+&lt;li&gt;Ensure the account has &lt;strong&gt;minimum required privileges&lt;/strong&gt; (e.g., access to only relevant buckets, Firestore, and BigQuery).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Grant Access in Destination Project&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Grant the required permissions in the &lt;strong&gt;Google Cloud Console&lt;/strong&gt; under the specific &lt;strong&gt;Dev folder&lt;/strong&gt; or relevant folder in the &lt;strong&gt;Destination Project&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Ensure this account has sufficient privileges in the &lt;strong&gt;Destination Project&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Log into GCP with the Test Account&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use the alias account to log into Google Cloud Platform (GCP).&lt;/li&gt;
+&lt;li&gt;Validate access by navigating to the &lt;strong&gt;destination project&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Revoke Excess Access&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;To prevent any unintentional access, revoke any excess permissions in your terminal:&lt;/li&gt;
+&lt;li&gt;This ensures that only the intended project is accessed during the transfer.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gcloud auth revoke
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gcloud auth login
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gcloud projects list
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gcloud config get project
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Delete Storage Buckets in the Destination Project&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Navigate to &lt;strong&gt;Cloud Storage&lt;/strong&gt; in the &lt;strong&gt;Destination Project&lt;/strong&gt; and delete any existing buckets that need to be recreated or refreshed.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Delete the Firestore Database in the Destination Project&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Go to &lt;strong&gt;Firestore&lt;/strong&gt; in the &lt;strong&gt;Destination Project&lt;/strong&gt; and delete the database if required. Ensure that you are aware of the data that needs to be replaced.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Export Firestore Database from Source Project&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In the &lt;strong&gt;Source Project&lt;/strong&gt;, export the Firestore database to a &lt;strong&gt;Cloud Storage bucket&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create Storage Buckets in the Destination Project - Terraform&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;strong&gt;Terraform&lt;/strong&gt; to create the necessary &lt;strong&gt;Cloud Storage buckets&lt;/strong&gt; in the &lt;strong&gt;Destination Project&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Ensure that bucket configurations match the source project for consistency.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create BigQuery Datasets in the Destination Project - Terraform&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use &lt;strong&gt;Terraform&lt;/strong&gt; to set up the &lt;strong&gt;BigQuery datasets&lt;/strong&gt; in the &lt;strong&gt;Destination Project&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Ensure that dataset schemas and settings match the source.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create Firestore (Datastore) in the Destination Project - Terraform&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Again, using &lt;strong&gt;Terraform&lt;/strong&gt;, create the necessary &lt;strong&gt;Firestore in Datastore mode&lt;/strong&gt; (default) database in the &lt;strong&gt;Destination Project&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Locate Bootstrap Scripts&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In the platform repo, find the [PATH_TO_THE_SCRIPTS] scripts.&lt;/li&gt;
+&lt;li&gt;These scripts will automate the seeding of data into the destination project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Synchronize Cloud Storage Data&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the script seed-gcs.sh, which synchronizes data between Cloud Storage buckets from the source to the destination project.&lt;/li&gt;
+&lt;li&gt;This step ensures that all files from the source bucket are transferred to the destination bucket.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./seed-gcs.sh &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;SOURCE&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;DESTINATION&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Synchronize Firestore (Datastore) Data&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Use the seed-datastore.sh script to synchronize the exported &lt;strong&gt;Datastore&lt;/strong&gt; content from the &lt;strong&gt;source bucket&lt;/strong&gt; to the &lt;strong&gt;destination bucket&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;This script also imports data into the &lt;strong&gt;Firestore (Datastore)&lt;/strong&gt; in the &lt;strong&gt;Destination Project&lt;/strong&gt;.&lt;/li&gt;
+&lt;li&gt;Key environment variables to set:
+&lt;ul&gt;
+&lt;li&gt;SRC_LOCATION: Source project location.&lt;/li&gt;
+&lt;li&gt;SRC_BUCKET: Name of the source bucket.&lt;/li&gt;
+&lt;li&gt;SNAPSHOT: Snapshot of the data.&lt;/li&gt;
+&lt;li&gt;DEST_PROJECT: Destination project name.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./seed-datastore.sh &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;DESTINATION&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Create Composite Indexes in Datastore (Destination)&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Define indexes in an index.yaml file based on query requirements.&lt;/li&gt;
+&lt;li&gt;Use gcloud to create the indexes:&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;gcloud firestore indexes create index.yaml
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Synchronize BigQuery Data&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Run the seed-bigquery.sh script to synchronize BigQuery data from the source to the destination project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;./seed-bigquery.sh &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;SOURCE&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt; &lt;span class=&#34;o&#34;&gt;[&lt;/span&gt;DESTINATION&lt;span class=&#34;o&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Update Service Config in Datastore&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;In &lt;strong&gt;Firestore (Datastore)&lt;/strong&gt;, update the &lt;strong&gt;Service Config&lt;/strong&gt; for the application:
+&lt;ul&gt;
+&lt;li&gt;Namespace: feefo&lt;/li&gt;
+&lt;li&gt;Kind: ServiceConfig&lt;/li&gt;
+&lt;li&gt;Update the hostname to point to the correct VM within the destination project.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;&lt;strong&gt;Bounce the Pods and VMs&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;After all data is transferred and services are set up, &lt;strong&gt;restart the pods and VMs&lt;/strong&gt; to ensure all services start fresh and use the new data.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        </item>
+        <item>
+        <title>Kubernetes `SampleApp` Microservice Deployment on GCP with Terraform 🚀</title>
+        <link>http://localhost:1313/p/kubernetes-sampleapp-microservice-deployment-on-gcp-with-terraform/</link>
+        <pubDate>Fri, 03 May 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/kubernetes-sampleapp-microservice-deployment-on-gcp-with-terraform/</guid>
+        <description>&lt;img src="http://localhost:1313/p/kubernetes-sampleapp-microservice-deployment-on-gcp-with-terraform/architecture-diagram.png" alt="Featured image of post Kubernetes `SampleApp` Microservice Deployment on GCP with Terraform 🚀" /&gt;&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#prerequisites-&#34; &gt;Prerequisites 🔧&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#4-steps-&#34; &gt;4. Steps: 🚀&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#41-step-1-set-up-the-gcp-project&#34; &gt;4.1. Step 1: Set up the GCP project&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#42-step-2-python-flask-microservice-&#34; &gt;4.2. Step 2: Python Flask Microservice 🐍&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#43-step-3-dockerfile-and-the-docker-image-&#34; &gt;4.3. Step 3: Dockerfile and the docker image 🐳&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#44-step-4-kubernetes-manifest-files-&#34; &gt;4.4. Step 4: Kubernetes manifest files 📄&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#45-step-5-cloud-sql-auth-proxy-&#34; &gt;4.5. Step 5: Cloud SQL Auth Proxy 🔒&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;#46-step-6-testing-and-troubleshooting-&#34; &gt;4.6. Step 6: Testing and troubleshooting 🧪&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;prerequisites-&#34;&gt;Prerequisites 🔧
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;Cloud Resources:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://console.cloud.google.com/welcome?project=microservice-on-kubernetes&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Cloud Platform&lt;/a&gt; account and project&lt;/li&gt;
+&lt;li&gt;Service accounts with required permissions&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/sdk/docs/install&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;gcloud CLI&lt;/a&gt; and SDK installed&lt;/li&gt;
+&lt;li&gt;Enabled APIs: Cloud SQL Admin API, Kubernetes Engine API, Artifact Registry API, IAM Service Account Credentials API&lt;/li&gt;
+&lt;li&gt;Cloud SQL instance, database, and user&lt;/li&gt;
+&lt;li&gt;Artifact Registry for storing the Docker image&lt;/li&gt;
+&lt;li&gt;Google Kubernetes Engine cluster&lt;/li&gt;
+&lt;li&gt;Cloud SQL Auth Proxy for connecting to the Cloud SQL instance from the GKE cluster&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Development Environment:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Code editor: &lt;a class=&#34;link&#34; href=&#34;https://code.visualstudio.com/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;VS Code&lt;/a&gt; (optional)&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.hashicorp.com/terraform/install&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Terraform&lt;/a&gt; for provisioning infrastructure&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.python.org/downloads/windows/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Python&lt;/a&gt; (for building the Flask microservice)&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://www.docker.com/products/docker-desktop/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Docker&lt;/a&gt; for containerization&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;Kubernetes Tools:&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://kubernetes.io/docs/tasks/tools/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;kubectl&lt;/a&gt; for interacting with the Kubernetes cluster&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&#34;4-steps-&#34;&gt;4. Steps: 🚀
+&lt;/h2&gt;&lt;h3 id=&#34;41-step-1-set-up-the-gcp-project&#34;&gt;4.1. Step 1: Set up the GCP project
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Create a new project in GCP&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create a service account with the required permissions (e.g. Storage Admin, Kubernetes Engine Admin, Artifact Registry Admin, Service Account User)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Add a key to the service account and download the JSON file&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Enable the necessary APIs: Cloud SQL Admin API, Kubernetes Engine API, Artifact Registry API, IAM Service Account Credentials API&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create the Terraform files:
+&lt;code&gt;provider.tf - GCP provider configuration variables.tf - Input variables for the Terraform configuration main.tf - Terraform configuration for creating the Cloud SQL instance, database, and user terraform.tfvars - Variable values for the Terraform configuration&lt;/code&gt;
+&lt;strong&gt;NOTE:&lt;/strong&gt; Make sure to include sensitive information in your gitignore file and do not expose them in the main code or in GitHub.&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create a Google Kubernetes Engine cluster&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;main.tf&lt;/strong&gt; - Terraform configuration for creating the GKE cluster&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Create an Artifact Registry repository in GCP and push the Docker image to the registry.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;main.tf&lt;/strong&gt; - Terraform configuration for creating the Artifact Registry repository&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;gcloud auth activate-service-account --key-file=[KEY_FILE]&lt;/code&gt; to authenticate the service account&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;terraform init&lt;/code&gt; to initialize the Terraform configuration&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;terraform plan&lt;/code&gt; to view the resources that will be created&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;terraform apply&lt;/code&gt; to create the resources&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;42-step-2-python-flask-microservice-&#34;&gt;4.2. Step 2: Python Flask Microservice 🐍
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Build a simple Python Flask microservice (using Terraform) that retrieves the current date/time from a Cloud SQL database&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;sample-app.py:&lt;/strong&gt; Python Flask code for the microservice&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;requirements.txt:&lt;/strong&gt; Required Python packages (e.g. Flask, Flask-SQLAlchemy, MySQL-connecttor-python)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;43-step-3-dockerfile-and-the-docker-image-&#34;&gt;4.3. Step 3: Dockerfile and the docker image 🐳
+&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;- **Dockerfile:** Configuration for building the Docker image
+&lt;/code&gt;&lt;/pre&gt;
+&lt;ul&gt;
+&lt;li&gt;Run &lt;code&gt;gcloud auth configure-docker&lt;/code&gt; to authenticate Docker to the Artifact Registry&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;docker build -t [HOSTNAME]/[PROJECT-ID]/[REPOSITORY]/[IMAGE]:[TAG] .&lt;/code&gt; to build and tag the Docker image&lt;/li&gt;
+&lt;li&gt;Run &lt;code&gt;docker push [HOSTNAME]/[PROJECT-ID]/[REPOSITORY]/[IMAGE]:[TAG]&lt;/code&gt; to push the Docker image to the Artifact Registry&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;44-step-4-kubernetes-manifest-files-&#34;&gt;4.4. Step 4: Kubernetes manifest files 📄
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;
+&lt;p&gt;Create the Kubernetes manifest files for the deployment, service, and Kubernetes service account (KSA)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;kubernetes-deployment-manifest.yaml:&lt;/strong&gt; Deployment configuration for the microservice&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;kubernetes-loadbalancer.yaml:&lt;/strong&gt; Service configuration for exposing the microservice&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;kubernetes-service-account.yaml:&lt;/strong&gt; Kubernetes service account configuration for the microservice&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;gcloud container clusters get-credentials [CLUSTER_NAME] --zone [ZONE] --project [PROJECT_ID]&lt;/code&gt; to authenticate kubectl to the GKE cluster&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;kubectl apply -f kubernetes-deployment-manifest.yaml&lt;/code&gt; to deploy the microservice&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;kubectl apply -f kubernetes-loadbalancer.yaml&lt;/code&gt; to expose the microservice (I use LoadBalancer)&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Run &lt;code&gt;kubectl apply -f kubernetes-service-account.yaml&lt;/code&gt; to create the Kubernetes service account&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;Kubernetes secrets(to store the Cloud SQL credentials):&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;main.tf:&lt;/strong&gt; Terraform configuration for creating the Kubernetes secret&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;45-step-5-cloud-sql-auth-proxy-&#34;&gt;4.5. Step 5: Cloud SQL Auth Proxy 🔒
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;The Cloud SQL Auth Proxy is a Cloud SQL connector that provides secure access to your instances without a need for Authorized networks or for configuring SSL. When you connect using the Cloud SQL Auth Proxy, the Cloud SQL Auth Proxy is added to your pod using the sidecar container pattern. The Cloud SQL Auth Proxy container is in the same pod as your application, which enables the application to connect to the Cloud SQL Auth Proxy using localhost, increasing security and performance.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;I used the method &lt;strong&gt;Workload Identity&lt;/strong&gt; to bind a KSA to a GSA, causing any deployments with that KSA to authenticate as the GSA in their interactions with Google Cloud. GKE Autopilot cluster has Workload Identity enabled by default.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Create a Google service account (GSA) with the required permissions (e.g. Cloud SQL Client)&lt;/li&gt;
+&lt;li&gt;Bind the KSA to the GSA by this command:
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;2
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;3
+&lt;/span&gt;&lt;span class=&#34;lnt&#34;&gt;4
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-gdscript3&#34; data-lang=&#34;gdscript3&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;n&#34;&gt;gcloud&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;iam&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;service&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;accounts&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;add&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iam&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;policy&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;-&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;binding&lt;/span&gt; \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;role&lt;/span&gt; &lt;span class=&#34;n&#34;&gt;roles&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;/&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;iam&lt;/span&gt;&lt;span class=&#34;o&#34;&gt;.&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;workloadIdentityUser&lt;/span&gt; \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;o&#34;&gt;--&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;member&lt;/span&gt; &lt;span class=&#34;s2&#34;&gt;&amp;#34;serviceAccount:[PROJECT_ID].svc.id.goog[NAMESPACE]/[KSA_NAME]&amp;#34;&lt;/span&gt; \
+&lt;/span&gt;&lt;/span&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;&lt;span class=&#34;p&#34;&gt;[&lt;/span&gt;&lt;span class=&#34;n&#34;&gt;GSA_EMAIL&lt;/span&gt;&lt;span class=&#34;p&#34;&gt;]&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;46-step-6-testing-and-troubleshooting-&#34;&gt;4.6. Step 6: Testing and troubleshooting 🧪
+&lt;/h3&gt;&lt;ul&gt;
+&lt;li&gt;Test the Kubernetes deployment and the pods by running &lt;code&gt;kubectl get deployments&lt;/code&gt; and &lt;code&gt;kubectl get pods&lt;/code&gt;.&lt;/li&gt;
+&lt;li&gt;Test the microservice by sending a GET request to the load balancer IP address
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;curl &amp;lt;EXTERNAL IP ADDRESS&amp;gt;&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&amp;lt;http://EXTERNAL IP ADDRESS&amp;gt;&lt;/li&gt;
+&lt;li&gt;GET http://EXTERNAL IP ADDRESS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        </item>
+        <item>
+        <title>🌥️ **GCP Cloud Resume API Challenge** 🌐</title>
+        <link>http://localhost:1313/p/%EF%B8%8F-gcp-cloud-resume-api-challenge/</link>
+        <pubDate>Sat, 23 Mar 2024 00:00:00 +0000</pubDate>
+        
+        <guid>http://localhost:1313/p/%EF%B8%8F-gcp-cloud-resume-api-challenge/</guid>
+        <description>&lt;img src="http://localhost:1313/p/%EF%B8%8F-gcp-cloud-resume-api-challenge/architecture-image.png" alt="Featured image of post 🌥️ **GCP Cloud Resume API Challenge** 🌐" /&gt;&lt;p&gt;Reference website: &lt;a class=&#34;link&#34; href=&#34;https://www.cloudresumeapi.dev&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://www.cloudresumeapi.dev&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Pre-requisites 🔧&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;A &lt;a class=&#34;link&#34; href=&#34;https://cloud.google.com/?hl=en&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Google Cloud Platform&lt;/a&gt; account and a project&lt;/li&gt;
+&lt;li&gt;&lt;a class=&#34;link&#34; href=&#34;https://developer.hashicorp.com/terraform/install&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;The Terraform CLI&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;The text editor I used is &lt;a class=&#34;link&#34; href=&#34;https://code.visualstudio.com/download&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;Visual Studio Code&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;1--to-get-started-i-set-up-your-gcp-and-github&#34;&gt;1. 🌀 To get started, I set up your GCP and GitHub
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;A project and service account in &lt;strong&gt;GCP&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;GitHub&lt;/strong&gt; repository&lt;/li&gt;
+&lt;li&gt;A &lt;strong&gt;Firestore&lt;/strong&gt; database - set up a table named &lt;code&gt;Resumes&lt;/code&gt; containing sample resume data&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;2--create-a-json-resume&#34;&gt;2. 📝 Create a JSON Resume
+&lt;/h3&gt;&lt;p&gt;Use &lt;a class=&#34;link&#34; href=&#34;https://jsonresume.org/schema/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;this schema&lt;/a&gt; to create your own JSON resume.&lt;/p&gt;
+&lt;h3 id=&#34;3--clone-the-project-repository-to-your-local-machine-and-change-directory-to-the-project-directory&#34;&gt;3. 📂 Clone the project repository to your local machine and change directory to the project directory
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Create the infrastructure using Terraform 🛠️&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;provider.tf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;variables.tf&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;terraform.tfvars&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;main.tf&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&#34;4--create-the-function-using-python&#34;&gt;4. 🐍 Create the function using Python
+&lt;/h3&gt;&lt;p&gt;&lt;strong&gt;Google Cloud Functions 🌀:&lt;/strong&gt; Fetch and return resume data based on an id. Utilize &lt;strong&gt;HTTP Trigger&lt;/strong&gt; with anonymous access.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;code&gt;main.py&lt;/code&gt;&lt;/li&gt;
+&lt;li&gt;&lt;code&gt;requirements.txt&lt;/code&gt; (define the dependencies - these will be installed when the function is deployed)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;In the &lt;code&gt;main.py&lt;/code&gt; you have to import &lt;code&gt;Flask&lt;/code&gt; - used for web development, including the &lt;code&gt;jsonify&lt;/code&gt; method used in the script and &lt;code&gt;google-cloud-firestore&lt;/code&gt; - used to interact with Firestore&lt;/p&gt;
+&lt;p&gt;&lt;code&gt;functions-framework=3.*&lt;/code&gt; - The functions-framework is a set of libraries for writing lightweight, portable Python functions that can run in various environments, including &lt;strong&gt;Google Cloud Functions&lt;/strong&gt;, your local development machine, or other cloud environments. It provides a consistent execution environment and request context, and allows you to focus on writing your function logic rather than worrying about the infrastructure.&lt;/p&gt;
+&lt;h3 id=&#34;5--initialize-the-terraform-project&#34;&gt;5. 🏗️ Initialize the Terraform project
+&lt;/h3&gt;&lt;p&gt;Once you have configured the project, you can upload the Terraform configuration to &lt;strong&gt;Google Cloud Platform&lt;/strong&gt; by running the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terraform plan
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;To check the changes that will be made to your infrastructure.&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;terraform apply
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;&lt;p&gt;When prompted, review the changes and type &lt;code&gt;yes&lt;/code&gt; to confirm that you want to apply the changes.&lt;/p&gt;
+&lt;h3 id=&#34;6-create-the-cloud-build-for-cicd-building_construction&#34;&gt;6. Create the Cloud Build for CI/CD :building_construction:
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;I authorized &lt;strong&gt;Cloud Build&lt;/strong&gt; to access the &lt;strong&gt;GitHub&lt;/strong&gt; repository&lt;/li&gt;
+&lt;li&gt;I created a trigger to build the function when a new commit is pushed to the repository&lt;/li&gt;
+&lt;li&gt;I created the &lt;code&gt;cloudbuild.yaml&lt;/code&gt; file to define the build steps&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&#34;7--test-the-api&#34;&gt;7. 🧪 Test the API
+&lt;/h3&gt;&lt;p&gt;API URL: &lt;a class=&#34;link&#34; href=&#34;https://europe-west2-cloud-resume-api-418008.cloudfunctions.net/cloudresumeapi-1&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
+    &gt;https://europe-west2-cloud-resume-api-418008.cloudfunctions.net/cloudresumeapi-1&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;Or open the terminal and run the following command:&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
+&lt;table class=&#34;lntable&#34;&gt;&lt;tr&gt;&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code&gt;&lt;span class=&#34;lnt&#34;&gt;1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;
+&lt;td class=&#34;lntd&#34;&gt;
+&lt;pre tabindex=&#34;0&#34; class=&#34;chroma&#34;&gt;&lt;code class=&#34;language-bash&#34; data-lang=&#34;bash&#34;&gt;&lt;span class=&#34;line&#34;&gt;&lt;span class=&#34;cl&#34;&gt;curl https://europe-west2-cloud-resume-api-418008.cloudfunctions.net/cloudresumeapi-1
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;</description>
+        </item>
+        <item>
+        <title>My first static website 🌐 on Google Cloud Platform ☁️ using Terraform 🔨</title>
+        <link>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-%EF%B8%8F-using-terraform/</link>
         <pubDate>Sat, 17 Feb 2024 00:00:00 +0000</pubDate>
         
-        <guid>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-using-terraform/</guid>
-        <description>&lt;img src="http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-using-terraform/GCP-static-website-plan-Terraform.png" alt="Featured image of post My first static website on Google Cloud Platform using Terraform" /&gt;&lt;h2 id=&#34;architecture-&#34;&gt;Architecture 🏗
+        <guid>http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-%EF%B8%8F-using-terraform/</guid>
+        <description>&lt;img src="http://localhost:1313/p/my-first-static-website-on-google-cloud-platform-%EF%B8%8F-using-terraform/GCP-static-website-plan-Terraform.png" alt="Featured image of post My first static website 🌐 on Google Cloud Platform ☁️ using Terraform 🔨" /&gt;&lt;h2 id=&#34;architecture-&#34;&gt;Architecture 🏗
 &lt;/h2&gt;&lt;p&gt;Hey!👋 I am Dominik and this project is a Terraform configuration that creates a static website on Google Cloud Platform.☁
 The website is my personal portfolio and is hosted on a Cloud Storage bucket. The website is served using an HTTPS load balancer, which provides SSL termination. This ensures that all traffic to the website is secure and encrypted. The website is accessible at &lt;a class=&#34;link&#34; href=&#34;https://www.domssocial.co.uk&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;www.domssocial.co.uk&lt;/a&gt;.&lt;/p&gt;
@@ -112,26 +572,27 @@ And the Cloud CDN is used to cache the website content and improve performance.&
 &lt;h3 id=&#34;7-testing-the-static-website&#34;&gt;7. Testing the Static Website👏
 &lt;/h3&gt;&lt;p&gt;Once the static website has been created, you can test it by visiting the following URL: &amp;lt;www.domssocial.co.uk&amp;gt;&lt;/p&gt;
 &lt;h3 id=&#34;how-it-works&#34;&gt;How it works🧮
-&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;When a user visits the website, the following steps occur
-
-1. Cloud DNS: The user enters your domain name in their browser. Cloud DNS  translates the domain name to the IP address of the Cloud CDN edge location closest to the user.
-2.Cloud CDN Caching: The user&#39;s browser connects to the nearest Cloud CDN edge location.  Cloud CDN checks its cache for the requested content (static files like images, HTML, CSS, JavaScript).
-3.Cache Hit: If the content is already cached at the edge location, Cloud CDN serves the content directly to the user&#39;s browser, resulting in faster delivery due to reduced latency.
-4.Load Balancer: If Cloud CDN doesn&#39;t have the requested content cached, it forwards the request to the Load Balancer.
-5.The Load Balancer distributes the request traffic across your backends, which are the Cloud Storage buckets that host your website content.
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/h3&gt;&lt;p&gt;When a user visits the website, the following steps occur:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;strong&gt;Cloud DNS&lt;/strong&gt;: The user enters your domain name in their browser. Cloud DNS translates the domain name to the IP address of the Cloud CDN edge location closest to the user.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cloud CDN Caching&lt;/strong&gt;: The user&amp;rsquo;s browser connects to the nearest Cloud CDN edge location. Cloud CDN checks its cache for the requested content (static files like images, HTML, CSS, JavaScript).&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Cache Hit&lt;/strong&gt;: If the content is already cached at the edge location, Cloud CDN serves the content directly to the user&amp;rsquo;s browser, resulting in faster delivery due to reduced latency.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Load Balancer&lt;/strong&gt;: If Cloud CDN doesn&amp;rsquo;t have the requested content cached, it forwards the request to the Load Balancer.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Backends&lt;/strong&gt;: The Load Balancer distributes the request traffic across your backends, which are the Cloud Storage buckets that host your website content.&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h3 id=&#34;the-frontend-design-of-the-website&#34;&gt;The Frontend design of the website
 &lt;/h3&gt;&lt;p&gt;The frontend of the website is a HTML, CSS and JS files. I downloaded the template from &lt;a class=&#34;link&#34; href=&#34;https://html5up.net/&#34;  target=&#34;_blank&#34; rel=&#34;noopener&#34;
     &gt;https://html5up.net/&lt;/a&gt;, and modified it to suit my needs.&lt;/p&gt;
 &lt;h3 id=&#34;skills-gained&#34;&gt;Skills gained📚
-&lt;/h3&gt;&lt;pre&gt;&lt;code&gt;1. How to use Terraform to create infrastructure on Google Cloud Platform
-2. How to create a static website on Google Cloud Platform
-3. How to use Cloud Storage, Cloud CDN, and an HTTPS load balancer to host a static website
-4. How to use and create Cloud DNS zones
-5. How to use a service account key file to authenticate Terraform to Google Cloud Platform
-6. How to create a SSL certificate for a domain
-7. Gained some experience with HTML, CSS and JS
-&lt;/code&gt;&lt;/pre&gt;
+&lt;/h3&gt;&lt;ol&gt;
+&lt;li&gt;How to use Terraform to create infrastructure on Google Cloud Platform&lt;/li&gt;
+&lt;li&gt;How to create a static website on Google Cloud Platform&lt;/li&gt;
+&lt;li&gt;How to use Cloud Storage, Cloud CDN, and an HTTPS load balancer to host a static website&lt;/li&gt;
+&lt;li&gt;How to use and create Cloud DNS zones&lt;/li&gt;
+&lt;li&gt;How to use a service account key file to authenticate Terraform to Google Cloud Platform&lt;/li&gt;
+&lt;li&gt;How to create an SSL certificate for a domain&lt;/li&gt;
+&lt;li&gt;Gained some experience with HTML, CSS and JS&lt;/li&gt;
+&lt;/ol&gt;
 </description>
         </item>
         
