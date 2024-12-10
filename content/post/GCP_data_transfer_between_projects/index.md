@@ -26,18 +26,22 @@ Transfer data from a source GCP project to a destination project, including Clou
 ## 📋 Instructions
 
 1. #### Create a GSuite Alias Account
+
     - Set up a **GSuite alias account** that will be used solely for this data transfer.
     - Ensure the account has **minimum required privileges** (e.g., access to only relevant buckets, Firestore, and BigQuery).
 
 2. #### Grant Access in Destination Project
+
     - Grant the required permissions in the **Google Cloud Console** under the specific **Dev folder** or relevant folder in the **Destination Project**.
     - Ensure this account has sufficient privileges in the **Destination Project**.
 
 3. #### Log into GCP with the Test Account
+
     - Use the alias account to log into Google Cloud Platform (GCP).
     - Validate access by navigating to the **destination project**.
 
 4. #### Revoke Excess Access
+
     - To prevent any unintentional access, revoke any excess permissions in your terminal:
     - This ensures that only the intended project is accessed during the transfer.
 
@@ -48,31 +52,39 @@ Transfer data from a source GCP project to a destination project, including Clou
     gcloud config get project
     ```
 
-5. #### Delete Storage Buckets in the Destination Project 
+5. #### Delete Storage Buckets in the Destination Project
+
     - Navigate to **Cloud Storage** in the **Destination Project** and delete any existing buckets that need to be recreated or refreshed.
 
 6. #### Delete the Firestore Database in the Destination Project
+
     - Go to **Firestore** in the **Destination Project** and delete the database if required. Ensure that you are aware of the data that needs to be replaced.
 
 7. #### Export Firestore Database from Source Project
+
     - In the **Source Project**, export the Firestore database to a **Cloud Storage bucket**.
 
-8. #### Create Storage Buckets in the Destination Project - Terraform 
+8. #### Create Storage Buckets in the Destination Project - Terraform
+
     - Use **Terraform** to create the necessary **Cloud Storage buckets** in the **Destination Project**.
     - Ensure that bucket configurations match the source project for consistency.
 
-9. #### Create BigQuery Datasets in the Destination Project - Terraform 
+9. #### Create BigQuery Datasets in the Destination Project - Terraform
+
     - Use **Terraform** to set up the **BigQuery datasets** in the **Destination Project**.
     - Ensure that dataset schemas and settings match the source.
 
-10. #### Create Firestore (Datastore) in the Destination Project - Terraform 
+10. #### Create Firestore (Datastore) in the Destination Project - Terraform
+
     - Again, using **Terraform**, create the necessary **Firestore in Datastore mode** (default) database in the **Destination Project**.
 
-11. #### Locate Bootstrap Scripts 
+11. #### Locate Bootstrap Scripts
+
     - Find the [`bootstrap scripts in my GitHub repository here`](https://github.com/dominikjaro/GCP-data-transfer-between-projects.git).
     - These scripts will automate the seeding of data into the destination project.
 
-12. #### Synchronize Cloud Storage Data 
+12. #### Synchronize Cloud Storage Data
+
     - Run the script [`seed-gcs.sh`](https://github.com/dominikjaro/GCP-data-transfer-between-projects/blob/master/seed-data/seed-gcs.sh), which synchronizes data between Cloud Storage buckets from the source to the destination project.
     - This step ensures that all files from the source bucket are transferred to the destination bucket.
 
@@ -80,7 +92,8 @@ Transfer data from a source GCP project to a destination project, including Clou
     ./seed-gcs.sh [SOURCE] [DESTINATION]
     ```
 
-13. #### Synchronize Firestore (Datastore) Data 
+13. #### Synchronize Firestore (Datastore) Data
+
     - Use the [`seed-datastore.sh`](https://github.com/dominikjaro/GCP-data-transfer-between-projects/blob/master/seed-data/seed-datastore.sh) script to synchronize the exported **Datastore** content from the **source bucket** to the **destination bucket**.
     - This script also imports data into the **Firestore (Datastore)** in the **Destination Project**.
     - Key environment variables to set:
@@ -93,7 +106,8 @@ Transfer data from a source GCP project to a destination project, including Clou
     ./seed-datastore.sh [DESTINATION]
     ```
 
-14. #### Create Composite Indexes in Datastore (Destination) 
+14. #### Create Composite Indexes in Datastore (Destination)
+
     - Define indexes in an [`index.yaml`](https://github.com/dominikjaro/GCP-data-transfer-between-projects/blob/master/seed-data/index.yaml) file based on query requirements.
     - Use gcloud to create the indexes:
 
@@ -101,18 +115,21 @@ Transfer data from a source GCP project to a destination project, including Clou
     gcloud firestore indexes create index.yaml
     ```
 
-15. #### Synchronize BigQuery Data 
+15. #### Synchronize BigQuery Data
+
     - Run the [`seed-bigquery.sh`](https://github.com/dominikjaro/GCP-data-transfer-between-projects/blob/master/seed-data/seed-bigquery.sh) script to synchronize BigQuery data from the source to the destination project.
 
     ```bash
     ./seed-bigquery.sh [SOURCE] [DESTINATION]
     ```
 
-16. #### Update Service Config in Datastore 
+16. #### Update Service Config in Datastore
+
     - In **Firestore (Datastore)**, update the **Service Config** for the application:
         - Namespace: []
         - Kind: []
         - Update the hostname to point to the correct VM within the destination project.
 
-17. #### Bounce the Pods and VMs 
+17. #### Bounce the Pods and VMs
+
     - After all data is transferred and services are set up, **restart the pods and VMs** to ensure all services start fresh and use the new data.
