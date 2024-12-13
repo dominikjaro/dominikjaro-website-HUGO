@@ -150,13 +150,13 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 
 [data-scheme="light"] {
     --pre-text-color: #272822;
-    --pre-background-color: #fafafa;
+    --pre-background-color: #e3eed9;
     @import "partials/highlight/light.scss";
 }
 
 [data-scheme="dark"] {
     --pre-text-color: #f8f8f2;
-    --pre-background-color: #2f3740;
+    --pre-background-color: #274160;
     @import "partials/highlight/dark.scss";
 }
 
