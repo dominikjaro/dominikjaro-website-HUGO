@@ -2,11 +2,11 @@
 title: "About"
 description: "Dominik Jaro is a dedicated DevOps and Cloud Engineer with a strong specialization in Infrastructure as Code (IaC), particularly using HashiCorp Terraform. He excels in optimizing cloud infrastructures, automating workflows, and enhancing system reliability."
 date: 2024-12-13
+image: "profile_photo.png"
 aliases:
   - about-us
   - about-hugo
   - contact
-license: CC BY-NC-ND
 menu:
     main: 
         weight: -90
