@@ -11,7 +11,7 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
         --main-top-padding: 50px;
     }
 
-    --body-background: #f5f5fa;
+    --body-background: #1919ce;
 
     --accent-color: #34495e;
     --accent-color-darker: #2c3e50;
@@ -149,7 +149,7 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 }
 
 [data-scheme="light"] {
-    --pre-text-color: #5c691b;
+    --pre-text-color: #272822;
     --pre-background-color: #c7d2be;
     @import "partials/highlight/light.scss";
 }
