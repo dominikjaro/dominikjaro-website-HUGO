@@ -10,7 +10,7 @@ menu:
 comments: false
 ---
 
-<form action="https://formspree.io/f/dominikjaro789@gmail.com" method="POST">
+<form action="https://formspree.io/f/xyzzklge" method="POST">
     <div class="form-group">
         <label for="name">Full Name</label>
         <input type="text" name="name" id="name" required>
