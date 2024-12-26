@@ -1,37 +1,63 @@
 ---
 title: Contact
-links:
-  - title: GitHub
-    description: GitHub is the world's largest software development platform.
-    website: https://github.com
-    image: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-  - title: TypeScript
-    description: TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
-    website: https://www.typescriptlang.org
-    image: ts-logo-128.jpg
+layout: contact
 menu:
     main: 
         weight: -50
         params:
-            icon: link
+            icon: mail
 
 comments: false
 ---
 
-To use this feature, add `links` section to frontmatter.
+<form action="https://formspree.io/f/dominikjaro789@gmail.com" method="POST">
+    <div class="form-group">
+        <label for="name">Full Name</label>
+        <input type="text" name="name" id="name" required>
+    </div>
 
-This page's frontmatter:
+    <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" name="email" id="email" required>
+    </div>
 
-```yaml
-links:
-  - title: GitHub
-    description: GitHub is the world's largest software development platform.
-    website: https://github.com
-    image: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
-  - title: TypeScript
-    description: TypeScript is a typed superset of JavaScript that compiles to plain JavaScript.
-    website: https://www.typescriptlang.org
-    image: ts-logo-128.jpg
-```
+    <div class="form-group">
+        <label for="message">Message</label>
+        <textarea name="message" id="message" rows="5" required></textarea>
+    </div>
 
-`image` field accepts both local and external images.
+    <button type="submit">Send Message</button>
+</form>
+
+<style>
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+input, textarea {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid var(--card-separator-color);
+    border-radius: var(--card-border-radius);
+    background: var(--card-background);
+    color: var(--card-text-color-main);
+}
+
+button {
+    background: var(--accent-color);
+    color: var(--accent-color-text);
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--card-border-radius);
+    cursor: pointer;
+}
+
+button:hover {
+    background: var(--accent-color-darker);
+}
+</style>
