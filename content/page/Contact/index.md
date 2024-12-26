@@ -5,7 +5,7 @@ menu:
     main: 
         weight: -50
         params:
-            #icon: mail
+            icon: user
 
 comments: false
 ---
