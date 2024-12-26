@@ -1,11 +1,11 @@
-<!-- ---
+---
 title: Contact
 layout: contact
 menu:
     main: 
         weight: -50
         params:
-            icon: mail
+            #icon: mail
 
 comments: false
 ---
@@ -60,4 +60,4 @@ button {
 button:hover {
     background: var(--accent-color-darker);
 }
-</style> -->
+</style>
