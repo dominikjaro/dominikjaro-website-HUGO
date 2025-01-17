@@ -127,7 +127,7 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 
     &[data-scheme="dark"] {
         --code-background-color: #1c2333;
-        --code-text-color: #00ff00;
+        --code-text-color: #00fff5;
 
         --table-border-color: #4361ee;
         --tr-even-background-color: #1a1a2e;
@@ -155,7 +155,7 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 }
 
 [data-scheme="dark"] {
-    --pre-text-color: #00ff00;
+    --pre-text-color: #00fff5;
     --pre-background-color: #1c2333;
     @import "partials/highlight/dark.scss";
 }
