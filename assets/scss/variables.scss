@@ -126,8 +126,8 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
     --kbd-border-color: #dadada;
 
     &[data-scheme="dark"] {
-        --code-background-color: #274160;
-        --code-text-color: #f1c40f;
+        --code-background-color: #1c2333;
+        --code-text-color: #00ff00;
 
         --table-border-color: #717171;
         --tr-even-background-color: #274160;
@@ -155,8 +155,8 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 }
 
 [data-scheme="dark"] {
-    --pre-text-color: #f8f8f2;
-    --pre-background-color: #274160;
+    --pre-text-color: #00ff00;
+    --pre-background-color: #1c2333;
     @import "partials/highlight/dark.scss";
 }
 
