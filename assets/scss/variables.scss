@@ -81,7 +81,7 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
         --card-background: #1a1a2e;
         --card-background-selected: #16213e;
 
-        --card-text-color-main: #ffffff; //#fee440;
+        --card-text-color-main: #fee440;
         --card-text-color-secondary: #ffffff;
         --card-text-color-tertiary: #00ff00;
         --body-text-color: #ffffff;
@@ -131,7 +131,8 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 
     &[data-scheme="dark"] {
         --code-background-color: #1c2333;
-        --code-text-color: #00fff5;
+        --code-text-color: #fee440;
+        
         --body-text-color: #ffffff;
 
         --table-border-color: #4361ee;

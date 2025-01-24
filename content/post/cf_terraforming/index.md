@@ -5,7 +5,7 @@ description: "A practical guide on using cf-terraforming to automate Cloudflare 
 categories: ["Cloud", "IaC"]
 tags: ["terraform", "cloudflare", "automation"]
 image: "terraform-cloudflare.png"
-
+---
 
 ## 👋 Introduction 
 
@@ -90,5 +90,3 @@ The tool offers several useful commands:
 ## 🎉 Conclusion
 
 `cf-terraforming` significantly streamlines the process of managing Cloudflare resources with Terraform. While it may require some post-processing for resource naming, it's an invaluable tool for DevOps automation.
-
----
