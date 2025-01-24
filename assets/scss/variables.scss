@@ -136,6 +136,9 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
         --code-text-color: #00fff5;
         --body-text-color: #ffffff;
 
+        --article-text-color: var(--body-text-color);
+        --article-heading-color: var(--card-text-color-main);
+
         --table-border-color: #4361ee;
         --tr-even-background-color: #1a1a2e;
 
