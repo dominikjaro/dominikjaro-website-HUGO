@@ -81,13 +81,11 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
         --card-background: #1a1a2e;
         --card-background-selected: #16213e;
 
-        --card-text-color-main: #fee440;
+        --card-text-color-main: #ffffff; //#fee440;
         --card-text-color-secondary: #ffffff;
         --card-text-color-tertiary: #00ff00;
         --body-text-color: #ffffff;
 
-        --article-text-color: var(--body-text-color);
-        --article-heading-color: var(--card-text-color-main);
 
         --card-separator-color: rgba(67, 97, 238, 0.3);
     }
@@ -135,9 +133,6 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
         --code-background-color: #1c2333;
         --code-text-color: #00fff5;
         --body-text-color: #ffffff;
-
-        --article-text-color: var(--body-text-color);
-        --article-heading-color: var(--card-text-color-main);
 
         --table-border-color: #4361ee;
         --tr-even-background-color: #1a1a2e;
