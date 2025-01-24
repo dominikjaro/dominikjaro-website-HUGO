@@ -80,10 +80,15 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
     &[data-scheme="dark"] {
         --card-background: #1a1a2e;
         --card-background-selected: #16213e;
+
         --card-text-color-main: #fee440;
-        --body-text-color: #ffffff;
         --card-text-color-secondary: #ffffff;
         --card-text-color-tertiary: #00ff00;
+        --body-text-color: #ffffff;
+
+        --article-text-color: var(--body-text-color);
+        --article-heading-color: var(--card-text-color-main);
+
         --card-separator-color: rgba(67, 97, 238, 0.3);
     }
 }
