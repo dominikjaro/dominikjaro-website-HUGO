@@ -86,6 +86,8 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
         --card-text-color-tertiary: #00ff00;
         --body-text-color: #ffffff;
 
+        --list-bullet-color: #ffffff;
+
 
         --card-separator-color: rgba(67, 97, 238, 0.3);
     }
@@ -131,7 +133,7 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 
     &[data-scheme="dark"] {
         --code-background-color: #1c2333;
-        --code-text-color: #fee440;
+        --code-text-color: #8A2BE2;
         
         --body-text-color: #ffffff;
 
