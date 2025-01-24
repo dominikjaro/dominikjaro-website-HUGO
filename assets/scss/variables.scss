@@ -81,6 +81,7 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
         --card-background: #1a1a2e;
         --card-background-selected: #16213e;
         --card-text-color-main: #fee440;
+        --body-text-color: #ffffff;
         --card-text-color-secondary: #ffffff;
         --card-text-color-tertiary: #00ff00;
         --card-separator-color: rgba(67, 97, 238, 0.3);
@@ -157,6 +158,9 @@ $defaultTagColors: #fff, #fff, #fff, #fff, #fff;
 [data-scheme="dark"] {
     --pre-text-color: #00fff5;
     --pre-background-color: #1c2333;
+
+    --code-background-color: #1c2333;
+    --code-text-color: #00fff5;
     @import "partials/highlight/dark.scss";
 }
 
