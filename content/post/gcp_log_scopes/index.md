@@ -4,7 +4,7 @@ date: 2025-01-31
 description: "Managing logs across multiple projects was challenging, requiring frequent context switching in GCP Logs Explorer. By implementing log scopes, we centralized logging into a single view, improving troubleshooting and monitoring. Using Terraform, we automated log scope creation, efficiently handling project limits and ensuring scalability. 🚀📊"
 categories: ["Cloud", "IaC"]
 tags: ["terraform", "gcp", "logging"]
-image: "logs-explorer.png"
+image: "logs.png"
 ---
 
 ## Log Scope
