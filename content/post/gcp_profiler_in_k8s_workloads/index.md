@@ -64,7 +64,7 @@ To ensure the Cloud Profiler agent is available in the image, I modified the Doc
         curl -s https://storage.googleapis.com/cloud-profiler/java/latest/profiler_java_agent.tar.gz \
         | tar xzv -C /opt/cprof
 
-    COPY --chown=feefo:feefo --chmod=0777 --from=maven /opt/cprof /opt/cprof
+    COPY --chown=<user>:<group> --chmod=0777 --from=maven /opt/cprof /opt/cprof
 ```
 
 - Installs required dependencies (tar, curl, gzip)
