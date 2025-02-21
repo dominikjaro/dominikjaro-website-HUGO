@@ -54,7 +54,27 @@ These parameters enable Cloud Profiler and configure heap sampling, service vers
 - Enables Heap Sampling (-cprof_enable_heap_sampling=true) for memory usage analysis
 - Defines Service Version & Project ID to organize profiling data in GCP
 
-### 3️⃣ Deployment & Testing
+### 3️⃣ Updating the Dockerfile 🐳
+
+To ensure the Cloud Profiler agent is available in the image, I modified the Dockerfile to download and install the profiler agent:
+
+```dockerfile
+    RUN yum install -y tar curl gzip && \
+        mkdir -p /opt/cprof && \
+        curl -s https://storage.googleapis.com/cloud-profiler/java/latest/profiler_java_agent.tar.gz \
+        | tar xzv -C /opt/cprof
+
+    COPY --chown=feefo:feefo --chmod=0777 --from=maven /opt/cprof /opt/cprof
+```
+
+- Installs required dependencies (tar, curl, gzip)
+- Creates a directory for the profiler agent (/opt/cprof)
+- Downloads & extracts the profiler agent from Google Cloud Storage
+- Ensures proper permissions with COPY --chown and --chmod
+
+    Note: This is not the entire Dockerfile—there are additional configurations as well.
+
+### 4️⃣ Deployment & Testing
 
 - Set up **port forwarding** and used **VisualVM** to create a JMX connection for real-time monitoring of metrics.
 - Deployed the changes to a **dev environment** and verified that the workload appeared in **GCP Profiler**.
