@@ -72,7 +72,7 @@ To ensure the Cloud Profiler agent is available in the image, I modified the Doc
 - Downloads & extracts the profiler agent from Google Cloud Storage
 - Ensures proper permissions with COPY --chown and --chmod
 
-    Note: This is not the entire Dockerfile—there are additional configurations as well.
+    **Note**: This is not the entire Dockerfile—there are additional configurations as well.
 
 ### 4️⃣ Deployment & Testing
 
@@ -84,10 +84,13 @@ To ensure the Cloud Profiler agent is available in the image, I modified the Doc
 ### ✅ Enhanced Performance Monitoring**
 
 Cloud Profiler provides **deep visibility** into **CPU and memory usage** with minimal impact on production performance.
-    **🛑 Proactive Bottleneck Detection**
+
+**🛑 Proactive Bottleneck Detection**
 By continuously profiling workloads, we can **identify inefficient code paths** and optimize resource consumption.
-    **💰 Scalability & Cost Optimization**
+
+**💰 Scalability & Cost Optimization**
 Analyzing production workload performance enables **better resource allocation**, reducing unnecessary compute costs.
+
 **🔧 Improved Debugging & Troubleshooting**
 With **JMX connections and VisualVM**, the team can **analyze metrics in real time** for quicker issue resolution.
 
