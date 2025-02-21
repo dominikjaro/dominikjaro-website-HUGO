@@ -48,9 +48,9 @@ image: "profiler.png"
 - Set up **port forwarding** and used **VisualVM** to create a JMX connection for real-time monitoring of metrics.
 - Deployed the changes to a **dev environment** and verified that the workload appeared in **GCP Profiler**.
 
-    **🚀 Key Learnings & Benefits for DevOps**
+### 🚀 Key Learnings & Benefits for DevOps**
 
-    **✅ Enhanced Performance Monitoring**
+### ✅ Enhanced Performance Monitoring**
 
 Cloud Profiler provides **deep visibility** into **CPU and memory usage** with minimal impact on production performance.
     **🛑 Proactive Bottleneck Detection**
