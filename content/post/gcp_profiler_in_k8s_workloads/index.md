@@ -34,14 +34,25 @@ image: "profiler.png"
         -Djava.rmi.server.hostname=[IP_ADDRESS]"
     ```
 
-- **Profiling Parameters**:
+- Enables JMX Remote (-Dcom.sun.management.jmxremote=true)
+- Sets the JMX Port (-Dcom.sun.management.jmxremote.port=9996)
+- Disables authentication & SSL for easy local monitoring
+- Defines the RMI server hostname (127.0.0.1) for local access
 
-    ```yaml
+- **JVM Profiling Parameters**:
+
+These parameters enable Cloud Profiler and configure heap sampling, service versioning, and project ID:
+
+```yaml
         profilingParameters: "-agentpath:/opt/cprof/profiler_java_agent.so=-logtostderr,
         -cprof_enable_heap_sampling=true,
         -cprof_service_version={{ .Values.image.tag }},
         -cprof_project_id={{ .Values.ServiceProjectid }},"
-    ```
+```
+
+- Loads the Profiler Agent (-agentpath:/opt/cprof/profiler_java_agent.so)
+- Enables Heap Sampling (-cprof_enable_heap_sampling=true) for memory usage analysis
+- Defines Service Version & Project ID to organize profiling data in GCP
 
 ### 3️⃣ Deployment & Testing
 
