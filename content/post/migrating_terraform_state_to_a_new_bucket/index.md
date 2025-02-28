@@ -6,7 +6,7 @@ description: "Recently, I had to refactor our Terraform code and migrate the 
                 In this blog, I'll walk through the  step-by-step process I followed to ensure a smooth and  safe migration  of our Terraform state."
 categories: ["Cloud","Terraform"]
 tags: ["GCP","Terraform","Migration"]
-image: "terraform_google_bucket.png"
+image: "terraform_gcpbucket.jpg"
 ---
 
 ## 📌 Steps to Migrate Terraform State
