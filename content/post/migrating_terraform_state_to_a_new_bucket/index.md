@@ -1,9 +1,9 @@
 ---
 title: "🚀 Migrating Terraform State to a New GCP Bucket"
 date: 2025-02-28
-description: "Recently, I had to refactor our Terraform code and migrate the Terraform state file to a new GCP bucket**. Fortunately, this was a straightforward migration, and I didn’t have to recreate any resources—just a quick state transfer was required.
-
-In this blog, I'll walk through the **step-by-step process** I followed to ensure a smooth and **safe migration** of our Terraform state."
+description: "Recently, I had to refactor our Terraform code and migrate the Terraform state file to a new GCP bucket. 
+                Fortunately, this was a straightforward migration, and I didn’t have to recreate any resources—just a quick state transfer was required.
+                In this blog, I'll walk through the  step-by-step process I followed to ensure a smooth and  safe migration  of our Terraform state."
 categories: ["Cloud","Terraform"]
 tags: ["GCP","Terraform","Migration"]
 image: "terraform_google_bucket.png"
