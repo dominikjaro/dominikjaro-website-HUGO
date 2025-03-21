@@ -1,6 +1,5 @@
 ---
-title: "About me"
-description: "Dominik Jaro is a dedicated DevOps and Cloud Engineer with a strong specialization in Infrastructure as Code (IaC), particularly using HashiCorp Terraform. He excels in optimizing cloud infrastructures, automating workflows, and enhancing system reliability."
+title: "The Story About Me"
 date: 2025-03-21
 image: "profile_photo.png"
 aliases:
@@ -13,9 +12,6 @@ menu:
         params:
             icon: user
 ---
-
-## Story About Me
-
 2021—the year I landed my first IT job. It was a helpdesk role at a mid-sized media company. My mindset? "Just get me in." But getting there wasn’t random.
 
 Before IT, I put in long hours as a delivery driver and in restaurant kitchens, where I learned the value of hard work. Later, as a Customer Service Administrator at The Little Foxes Club (funny name, I know—great place to work!), I picked up strong communication skills. Answering emails, handling calls, and dealing with people in person became second nature. I learned patience—especially when handling anxious or, let’s say, *difficult* customers.
