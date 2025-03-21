@@ -1,5 +1,5 @@
 ---
-title: "The Story About Me"
+title: "Story About Me"
 date: 2025-03-21
 image: "profile_photo.png"
 aliases:
