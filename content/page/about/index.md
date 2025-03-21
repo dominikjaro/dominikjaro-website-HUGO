@@ -20,7 +20,7 @@ menu:
 Before IT, I put in **long hours** as a **delivery driver** and worked in **restaurant kitchens**—where I learned the value of **hard work**. Later, as a **Customer Service Administrator** at *The Little Foxes Club* (funny name, I know—great place to work!), I picked up **strong communication skills**. Answering emails, handling calls, and dealing with people in person became **second nature**. I learned **patience**—especially when handling anxious or, let’s say, *difficult* customers.  
 
 ## 💡 Always Focused on IT
-- ✅ Passing **certifications** like COMPTIA A+ or Google Workspace Admin, see the certifications here [here](https://www.linkedin.com/in/dominik-jaro/details/certifications/) 
+- ✅ Passing **certifications** like COMPTIA A+ or Google Workspace Admin, see the certifications [here](https://www.linkedin.com/in/dominik-jaro/details/certifications/) 
 - ✅ Completing **personal projects** (my **Linux setup** became my playground AND see my personal projects on [GitHub](https://github.com/dominikjaro?tab=repositories))  
 - ✅ Becoming the **go-to tech guy** for family and friends  
 
