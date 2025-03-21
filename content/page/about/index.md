@@ -1,7 +1,7 @@
 ---
-title: "About"
+title: "About me"
 description: "Dominik Jaro is a dedicated DevOps and Cloud Engineer with a strong specialization in Infrastructure as Code (IaC), particularly using HashiCorp Terraform. He excels in optimizing cloud infrastructures, automating workflows, and enhancing system reliability."
-date: 2024-12-13
+date: 2025-03-21
 image: "profile_photo.png"
 aliases:
   - about-us
@@ -14,28 +14,15 @@ menu:
             icon: user
 ---
 
-## About Dominik Jaro
+## Story About Me
 
-Dominik Jaro is a passionate **DevOps and Cloud Engineer** specializing in **Infrastructure as Code (IaC)**, with a strong focus on **HashiCorp Terraform**. He has developed advanced proficiency in Terraform, becoming a key contributor to his team’s efforts in managing and scaling cloud infrastructure efficiently. Dominik is actively pursuing Terraform certification to officially validate his expertise and further solidify his skills in IaC.
+2021—the year I landed my first IT job. It was a helpdesk role at a mid-sized media company. My mindset? "Just get me in." But getting there wasn’t random.
 
-In addition to his Terraform expertise, Dominik has extensive experience with the **Google Cloud Platform (GCP)**. He is adept at managing and troubleshooting GCP environments, leveraging his hands-on experience with Google Workspace Admin and various GCP tools to optimize cloud operations and ensure seamless performance.
+Before IT, I put in long hours as a delivery driver and in restaurant kitchens, where I learned the value of hard work. Later, as a Customer Service Administrator at The Little Foxes Club (funny name, I know—great place to work!), I picked up strong communication skills. Answering emails, handling calls, and dealing with people in person became second nature. I learned patience—especially when handling anxious or, let’s say, *difficult* customers.
 
-Dominik has also ventured into the realm of **Kubernetes Deployments**, where he has been deploying and managing microservices within Kubernetes clusters. His work in this area demonstrates his commitment to expanding his knowledge and handling more complex deployments, even as he continues to learn and grow in this field.
+But IT was always the goal. I stayed on course, passing certifications like [examples] and completing personal projects. My Linux setup became my playground, and home servers kept me busy. Friends and family tickets piled up—I had been the go-to tech guy since childhood, after all.
 
-A significant aspect of Dominik’s role involves **Automation & CI/CD**. He has successfully automated access management workflows, ensuring secure and efficient role assignments across his organization. Additionally, he has implemented robust continuous integration and continuous deployment pipelines, streamlining development processes and enhancing overall productivity.
-
-### Professional Growth
-
-Dominik is committed to continuous learning and professional development. He is currently deepening his understanding of Kubernetes to enhance deployment strategies and cluster management. Alongside this, he is building proficiency in **Go Programming** to develop efficient and scalable applications that can further support his automation and infrastructure projects.
-
-### Community Engagement
-
-Dominik is an active participant in industry events, such as **HashiCorp conferences** and **Google Kubernetes Chaos Games**, where he stays updated with the latest trends and best practices. These engagements not only enrich his knowledge but also allow him to contribute to the broader DevOps and cloud engineering communities.
-
-### Future Goals
-
-Looking ahead, Dominik aims to finalize his mastery of Terraform to lead larger infrastructure projects. He also plans to gain in-depth knowledge of Kubernetes to manage more complex container orchestration scenarios effectively. Furthermore, Dominik is eager to expand his skill set in Go, aspiring to contribute to backend development and automation tools that drive innovation and efficiency within his projects.
-
-Through his dedication to mastering Terraform, enhancing his Kubernetes expertise, and expanding his programming skills, Dominik Jaro continues to make significant strides in the fields of DevOps and Cloud Engineering, positioning himself as a valuable asset in any technical team.
+Oh, and during COVID, I found myself doing something unexpected—teaching. I volunteered to help elderly people with basic computer skills and cybersecurity. Never thought I’d be a teacher, but I got good feedback (and patience became even more important!).
+TBC...
 
 ---
