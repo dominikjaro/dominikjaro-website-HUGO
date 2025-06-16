@@ -128,7 +128,7 @@ steps:
       - |
         #!/bin/bash
 
-        git clone -b ${BRANCH_NAME} --single-branch --depth 1 git@github.com:feefo/${REPO_NAME}.git
+        git clone -b ${BRANCH_NAME} --single-branch --depth 1 git@github.com:[REPLACE_WITH_YOUR_GITHUB_OWNER]/${REPO_NAME}.git
 
         git config --global user.email "REPLACE_WITH_YOUR_EMAIL"
         git config --global user.name "REPLACE_WITH_YOUR_NAME"
@@ -183,7 +183,7 @@ resource "google_cloudbuild_trigger" "terraform_docs_generator" {
 
 
   substitutions = {
-    "_WORKER_POOL_NAME" = "REPLACE_WITH_YOUR_WORKER_POOL_NAME" # e.g., "feefo-cloud-build-worker-pool"
+    "_WORKER_POOL_NAME" = "REPLACE_WITH_YOUR_WORKER_POOL_NAME" 
   }
 
   tags = [
