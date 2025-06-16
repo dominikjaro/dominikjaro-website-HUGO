@@ -162,7 +162,7 @@ availableSecrets:
   secretManager:
     - versionName: "REPLACE_WITH_YOUR_SECRET_VERSION_NAME" # e.g., "projects/PROJECT_ID/secrets/GITHUB_SSH_KEY/versions/latest"
       env: "GITHUB_SSH_KEY"
-      ```
+```
 
 ## ✅ Step 5: Finalise & Terraform It
 
@@ -171,6 +171,44 @@ Once I confirmed everything works via manual triggers, I:
 - Created the Cloud Build trigger in Terraform
 - Applied it
 - Merged the initial batch of generated README files
+
+```trigger.tf
+resource "google_cloudbuild_trigger" "terraform_docs_generator" {
+  description = "Automatically generates Terraform module READMEs on non-main branch pushes."
+  disabled    = false
+  filename    = "REPLACE_WITH_YOUR_CLOUDBUILD_FILE" # e.g., ".cloudbuild/terraform-docs.yaml"
+  location    = var.location
+  name        = "terraform-docs-generator"
+  project     = var.project
+
+
+  substitutions = {
+    "_WORKER_POOL_NAME" = "REPLACE_WITH_YOUR_WORKER_POOL_NAME" # e.g., "feefo-cloud-build-worker-pool"
+  }
+
+  tags = [
+    "managed_by_terraform",
+    "terraform-docs-automation",
+  ]
+
+  approval_config {
+    approval_required = false
+  }
+
+  github {
+    name  = "REPLACE_WITH_YOUR_GITHUB_REPO_NAME" # e.g., "platform-infra"
+    owner = "REPLACE_WITH_YOUR_GITHUB_OWNER"
+
+    push {
+      # This regex matches any branch name that is NOT equal to your main branch (e.g. 'master')
+      branch       = "master"
+      invert_regex = true
+    }
+  }
+
+  timeouts {}
+}
+```
 
 Now it works like a charm. 🚀 On every push (except master), the pipeline runs and updates only what’s needed.
 
