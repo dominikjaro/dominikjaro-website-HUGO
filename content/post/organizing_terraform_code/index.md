@@ -12,23 +12,25 @@ image: "terraform-code.png"
 When working with infrastructure as code, choosing the right Terraform module structure can be crucial for maintainability, scalability, and operational safety. In this post, I’ll document how I approached organizing Terraform code for managing Auth0 tenants independently of the broader platform infrastructure.
 Here’s the final structure I implemented under our Terraform monorepo:
 
+```
 📁 org/
-├──auth0/
-│   ├──auth0-dev/
-│   │   ├──main.tf
-│   │   ├──variables.tf
-│   │   └──terraform.tfstate
-│   └──auth0-prod/
-│       ├──main.tf
-│       ├──variables.tf
-│       └──terraform.tfstate
+├── auth0/
+│   ├── auth0-dev/
+│   │   ├── main.tf
+│   │   ├── variables.tf
+│   │   └── terraform.tfstate
+│   └── auth0-prod/
+│       ├── main.tf
+│       ├── variables.tf
+│       └── terraform.tfstate
 
 📦 modules/
-└──auth0/
-├──-auth0-dev/
-│   ├──*.tf (config files)
-└──-auth0-prod/
-    ├──*.tf (config files)
+└── auth0/
+    ├── auth0-dev/
+    │   ├── *.tf (config files)
+    └── auth0-prod/
+        ├── *.tf (config files)
+```
 
 ⸻
 
