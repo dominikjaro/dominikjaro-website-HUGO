@@ -51,7 +51,7 @@ This pipeline consists of two main steps: configuring SSH access to GitHub and r
 
 ```yaml
 # Rebase all open PR branches onto master
-  - name: "europe-west2-docker.pkg.dev/feefo-v4-cloud-build/docker/gh:latest"
+  - name: "europe-west2-docker.pkg.dev/artifact_rep/docker/gh:latest"
     id: "rebase-all-branches"
     entrypoint: "bash"
     volumes:
@@ -62,7 +62,7 @@ This pipeline consists of two main steps: configuring SSH access to GitHub and r
     - |
       _OPEN_PR_BRANCHES=$(gh pr list --repo "${REPO_FULL_NAME}" --state open --json headRefName -q '.[].headRefName')
       
-      git clone git@github.com:feefo/${REPO_NAME}.git
+      git clone git@github.com:organization_repo/${REPO_NAME}.git
       cd ${REPO_NAME}
       
       git config --global user.email "[YOUR_GITHUB_EMAIL_ADDRESS]"
