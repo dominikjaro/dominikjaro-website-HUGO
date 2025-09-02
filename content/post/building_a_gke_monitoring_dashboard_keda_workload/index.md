@@ -27,27 +27,27 @@ Our dashboard focuses on the most critical metrics for a KEDA-driven, Pub/Sub-ba
 
 These widgets tell us if messages are piling up or failing to process. They're the first place to look when something goes wrong.
 
-- High Unacknowledged Messages: This is the most direct indicator of a backlog. If the count of unacknowledged messages starts to grow, it means the service is failing to keep up with the incoming message volume. It's the primary scaling signal for KEDA.
+   - High Unacknowledged Messages: This is the most direct indicator of a backlog. If the count of unacknowledged messages starts to grow, it means the service is failing to keep up with the incoming message volume. It's the primary scaling signal for KEDA.
 
-- Dead-Letter Messages: This widget tracks messages that fail to be processed after a certain number of retries and are moved to a dead-letter queue. Any activity here is a clear sign of persistent message processing failures that require immediate attention.
+   - Dead-Letter Messages: This widget tracks messages that fail to be processed after a certain number of retries and are moved to a dead-letter queue. Any activity here is a clear sign of persistent message processing failures that require immediate attention.
 
-- Expired ACK Deadlines Count: This is a crucial metric for catching slow processing. It shows how many messages exceeded their acknowledgment deadline. A high number here means our pods are taking too long to process messages, even if they're not failing entirely.
+   - Expired ACK Deadlines Count: This is a crucial metric for catching slow processing. It shows how many messages exceeded their acknowledgment deadline. A high number here means our pods are taking too long to process messages, even if they're not failing entirely.
 
-2. Delivery Latency
+1. Delivery Latency
 This tells us how long messages are waiting in the system from end to end.
 
-- Publish to Ack Delta: This measures the total time from when a message is published to the topic to when it is successfully acknowledged by our service. It's an excellent measure of our overall system latency.
+   - Publish to Ack Delta: This measures the total time from when a message is published to the topic to when it is successfully acknowledged by our service. It's an excellent measure of our overall system latency.
 
-- Pull to Ack Delta: This measures the time from when a message is delivered to the service to when it is acknowledged. It tells us how long our application is taking to process a message.
+   - Pull to Ack Delta: This measures the time from when a message is delivered to the service to when it is acknowledged. It tells us how long our application is taking to process a message.
 
-3. Throughput and Service Health
+1. Throughput and Service Health
 These widgets give us a high-level view of our service's performance.
 
-- Published Message Count: A simple but vital metric to track the volume of messages our service is receiving. It helps us understand the load and correlate it with any performance changes.
+   - Published Message Count: A simple but vital metric to track the volume of messages our service is receiving. It helps us understand the load and correlate it with any performance changes.
 
-- Delivery Latency Health Score: This is a custom score that combines various latency metrics into a single, easy-to-read number. It gives us an immediate, at-a-glance view of service health.
+   - Delivery Latency Health Score: This is a custom score that combines various latency metrics into a single, easy-to-read number. It gives us an immediate, at-a-glance view of service health.
 
-- Log Panels: I included a dedicated panel to display log entries. This is essential for immediate troubleshooting. By including filters for severity=ERROR, we can see stack traces and error messages directly on the dashboard. This saves time and avoids having to navigate to a separate log explorer.
+   - Log Panels: I included a dedicated panel to display log entries. This is essential for immediate troubleshooting. By including filters for severity=ERROR, we can see stack traces and error messages directly on the dashboard. This saves time and avoids having to navigate to a separate log explorer.
 
 ---
 By combining these metrics, the dashboard provides a comprehensive view of our service's health, throughput, and error rates. It allows us to not only react to problems but also to proactively identify bottlenecks before they become critical issues.
