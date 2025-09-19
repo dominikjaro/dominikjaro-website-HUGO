@@ -13,6 +13,8 @@ The goal was ambitious but clear—to achieve a throughput of 100,000 processed 
 
 Our service consumes messages from a topic owned by another service, and all our deployments are managed via GitOps charts. This means any changes to our configuration need to be templated with Helm. Here’s a breakdown of the key adjustments we made to hit our target.
 
+---
+
 1. Pub/Sub Configuration ⚙️
 
 The first thing we looked at was how our service was pulling messages. We found that previous configurations were using a ratio-based approach, which was less precise for our specific workload. We decided to simplify and directly set the number of parallel pull threads.
