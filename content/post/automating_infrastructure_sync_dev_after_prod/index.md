@@ -2,8 +2,8 @@
 title: "🚀 Automating Infrastructure with Cloud Build & Atlantis (sync_dev_after_prod)"
 date: 2025-09-04
 description: "To automate a key workflow—syncing our master branch configuration to our dev-* environments—I created a robust Google Cloud Build pipeline."
-categories: ["Cloud", "CI/CD"]
-tags: ["automation", "terraform"]
+categories: ["CI/CD"]
+tags: ["Automation", "Cloud Build", "Terraform"]
 image: "sync_after_prod.png"
 ---
 

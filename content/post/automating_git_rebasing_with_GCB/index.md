@@ -2,8 +2,8 @@
 title: "🚀 Automating Git Rebasing with Google Cloud Build"
 date: 2025-09-01
 description: "The goal was simple: for every open pull request, automatically rebase its feature branch onto `master` and force-push the result. "
-categories: ["Cloud", "CI/CD"]
-tags: ["automation"]
+categories: ["CI/CD"]
+tags: ["Automation"]
 image: "cloudbuild.png"
 ---
 

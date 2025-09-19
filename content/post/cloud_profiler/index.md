@@ -3,7 +3,7 @@ title: "Optimizing your Microservices with 🚀 Google Cloud Profiler"
 date: 2025-07-11
 description: "When you have K8s microservices, you want them to be fast, efficient, and cost-effective. But how do you know exactly where your code is spending its time or consuming resources? That's where a profiler comes in."
 categories: ["Monitoring"]
-tags: ["GCP", "Cloud Profiler"]
+tags: ["GCP", "Cloud-Profiler"]
 image: "profiler.png"
 ---
 

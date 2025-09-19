@@ -2,8 +2,8 @@
 title: "🔐 Ditching JSON Keys for Workload Identity Federation (WID) in Kubernetes"
 date: 2025-02-14
 description: "When running workloads in Kubernetes that need to access Google Cloud resources, a common approach has been to use a service account JSON key stored in a secret. However, this method has security vulnerabilities. Recently, I transitioned to using **Workload Identity Federation (WID)**, which eliminates the need for JSON keys while ensuring secure access. Here’s why WID is a game-changer and what I learned during this migration. 🚀"
-categories: ["Cloud","Security","Kubernetes"]
-tags: ["GCP","workload-identity-federation","json"]
+categories: ["Security"]
+tags: ["GCP","workload-identity-federation"]
 image: "wid.jpg"
 ---
 

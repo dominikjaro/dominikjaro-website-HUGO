@@ -2,8 +2,8 @@
 title: "My first static website on Google Cloud Platform using Terraform"
 date: 2024-02-17
 description: "A step-by-step guide to creating a static website on Google Cloud Platform using Terraform, Cloud Storage, Cloud CDN, and HTTPS load balancer"
-categories: ["Cloud","DevOps","IaC"]
-tags: ["terraform", "GCP"]
+categories: ["Infrastructure as Code"]
+tags: ["Terraform", "GCP"]
 image: "GCP-static-website-plan-Terraform.png"
 ---
 

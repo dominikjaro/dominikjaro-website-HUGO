@@ -2,8 +2,8 @@
 title: "📊 Streamlining Log Management with Log Scopes"
 date: 2025-01-31
 description: "Managing logs across multiple projects was challenging, requiring frequent context switching in GCP Logs Explorer. By implementing log scopes, we centralized logging into a single view, improving troubleshooting and monitoring. Using Terraform, we automated log scope creation, efficiently handling project limits and ensuring scalability. 🚀📊"
-categories: ["Cloud", "IaC"]
-tags: ["terraform", "gcp", "logging"]
+categories: ["Infrastructure as Code"]
+tags: ["Terraform", "GCP", "Logging"]
 image: "logs.png"
 ---
 
@@ -64,7 +64,7 @@ data "google_projects" "dev_projects" {
 ########################################################################
 locals {
     # Define environment instances
-    environment_instances = ["dev-0", "dev-1", "dev-2", "dev-3", "dev-4", "dev-5", "dev-6", "dev-7", "dev-8", "dev-90", "dev-rc"]
+    environment_instances = ["xyz", "abc", "test", "staging", "qa", "preprod", "prod", "canary", "blue", "green", "hotfix"]
 
     # Create map of environment instances to their projects
     environment_project_map = {

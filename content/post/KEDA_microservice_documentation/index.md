@@ -2,8 +2,8 @@
 title: "🚀 KEDA Microservice Documentation"
 date: 2025-02-07
 description: "📌 This document outlines my experience implementing a Kubernetes microservice using KEDA (Kubernetes Event-Driven Autoscaling) to scale based on Pub/Sub messages. The focus is on how KEDA enables efficient scaling of workloads in response to event-driven triggers and the key lessons I learned along the way."
-categories: ["KEDA", "Kubernetes"]
-tags: ["terraform", "gcp", "pubsub"]
+categories: ["Kubernetes"]
+tags: ["Terraform", "GCP", "PubSub"]
 image: "keda.png"
 ---
 

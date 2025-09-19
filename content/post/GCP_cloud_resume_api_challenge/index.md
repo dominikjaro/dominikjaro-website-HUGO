@@ -2,8 +2,8 @@
 title: GCP-cloud-resume-api challange
 date: 2024-03-23
 description: A project where I built and deployed a serverless API using Google Cloud Functions and Firestore, integrated with Cloud Build as CI/CD to deploy functions on every push to GitHub automatically. An API that can serve resume data in JSON format. I used Terraform to manage and provision cloud infrastructure.
-categories: ["Cloud","DevOps","IaC"]
-tags: ["terraform","GCP","Automation"]
+categories: ["Infrastructure as Code"]
+tags: ["Terraform","GCP","Automation"]
 image: "architecture-image.png"
 ---
 

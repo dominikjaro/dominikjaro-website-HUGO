@@ -2,8 +2,8 @@
 title: "🚀 Implementing GCP Profiler in Java K8s Workloads"
 date: 2025-02-21
 description: "Google Cloud Profiler is a continuous profiling tool that helps analyze CPU and memory usage in production environments with minimal overhead. It provides insights into performance bottlenecks, enabling teams to optimize their applications for efficiency and cost savings."
-categories: ["Cloud","Monitoring","Kubernetes"]
-tags: ["GCP","performance","helm"]
+categories: ["Monitoring", "Performance", "Kubernetes"]
+tags: ["GCP","Helm"]
 image: "profiler.png"
 ---
 

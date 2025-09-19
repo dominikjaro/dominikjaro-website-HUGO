@@ -2,8 +2,8 @@
 title: "🗂️ Organising Terraform Code – module structure"
 date: 2025-06-01
 description: "In this post, I’ll document how I approached organizing Terraform code for managing Auth0 tenants independently of the broader platform infrastructure."
-categories: ["IaC"]
-tags: ["terraform","automation"]
+categories: ["Infrastructure as Code"]
+tags: ["Terraform"]
 image: "terraform-code.png"
 ---
 

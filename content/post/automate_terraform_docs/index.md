@@ -2,7 +2,7 @@
 title: "🚀 Automating Terraform Docs with Cloud Build"
 date: 2025-06-16
 description: "How I automated terraform-docs for our platform infrastructure repo using GCP Cloud Build and Docker"
-categories: ["Cloud", "IaC","GCP"]
+categories: ["Infrastructure as Code"]
 tags: ["terraform","automation","cloud-build","docker"]
 image: "terraform-docs.png"
 ---

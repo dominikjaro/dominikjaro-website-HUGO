@@ -2,8 +2,8 @@
 title: "🚀 Optimizing Data Processing: Moving from VM to Pub/Sub 🔄"
 date: 2024-10-25
 description: "A high CPU usage issue in a VM caused delays in data transfer from Datastore to BigQuery. Switching to a Pub/Sub-based approach improved scalability, efficiency, and reliability. 🚀🔄"
-categories: ["Cloud", "Data Engineering"]
-tags: ["terraform", "gcp", "pubsub"]
+categories: ["Data Engineering"]
+tags: ["GCP", "PubSub", "Datastore", "BigQuery"]
 image: "vm.jpg"
 ---
 

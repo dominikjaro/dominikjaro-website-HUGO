@@ -2,8 +2,8 @@
 title: "📊 Building a GKE Monitoring Dashboard for a KEDA Workload"
 date: 2025-09-02
 description: "Running event-driven microservices on GKE using KEDA is fantastic for cost efficiency and scalability."
-categories: ["Cloud", "Kubernetes", "IaC"]
-tags: ["Automation", "Monitoring", "Terraform"]
+categories: ["Monitoring", "Infrastructure as Code"]
+tags: ["GCP", "PubSub"]
 image: "monitoring3.png"
 ---
 
