@@ -14,6 +14,7 @@ The goal was ambitious but clear—to achieve a throughput of 100,000 processed 
 Our service consumes messages from a topic owned by another service, and all our deployments are managed via GitOps charts. This means any changes to our configuration need to be templated with Helm. Here’s a breakdown of the key adjustments we made to hit our target.
 
 1. Pub/Sub Configuration ⚙️
+
 The first thing we looked at was how our service was pulling messages. We found that previous configurations were using a ratio-based approach, which was less precise for our specific workload. We decided to simplify and directly set the number of parallel pull threads.
 
 Before:
@@ -36,6 +37,7 @@ sales.chunk.upload.parallel.pull.count=15
 ```
 
 2. Fine-tuning Resource Limits 💾
+
 A common pitfall is over-provisioning resources, leading to unnecessary overhead. Our staging environment had much higher resource limits that weren't being fully utilized. We decided to right-size these limits to be more cost-effective.
 
 The configuration we settled on:
@@ -53,6 +55,7 @@ resources:
 By setting both requests and limits to the same value, we ensure the Kubernetes scheduler gives our pods exactly what they need without wasting resources.
 
 3. Optimizing Horizontal Pod Autoscaling (HPA) 📈
+
 To handle traffic spikes and dips, we needed intelligent autoscaling. Our goal was for the service to scale up immediately when a large batch of data arrives, but to scale down more slowly to avoid a race condition where a new batch arrives just after pods are terminated.
 
 We achieved this by adjusting the `stabilizationWindowSeconds` for both scaling up and scaling down in our HPA definition.
