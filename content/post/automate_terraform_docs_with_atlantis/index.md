@@ -126,9 +126,9 @@ if git diff --quiet -- "**/README.md"; then
     echo "No documentation changes detected."
 else
     # Authentication: Forces Git to use HTTPS and injects the $ATLANTIS_GH_TOKEN directly into the URL.
-    git remote set-url origin "https://feefoatlantis:${ATLANTIS_GH_TOKEN}@github.com/feefo/platform.git"
-    git config --global user.name "feefoatlantis"
-    git config --global user.email "feefoatlantis@feefo.com"
+    git remote set-url origin "[YOUR_GITHUB_REPO_URL]"
+    git config --global user.name "[YOUR_GITHUB_USERNAME]"
+    git config --global user.email "[YOUR_GITHUB_EMAIL]"
       
     git add "**/README.md"
     git commit -m "docs: auto-generate terraform-docs [skip ci]"
