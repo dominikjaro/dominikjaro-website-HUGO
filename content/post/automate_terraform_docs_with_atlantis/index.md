@@ -64,7 +64,7 @@ USER atlantis
 The custom `Makefile` handles fetching the base Atlantis image, building our new image, and pushing it to Artifact Registry:
 
 ```Makefile
-_DOCKER_REPO        := <>our-artifact-registry>/docker
+_DOCKER_REPO        := <our-artifact-registry>/docker
 _DOCKER_IMAGE       := $(_DOCKER_REPO)/atlantis:v0.36.0
 _TERRAFORM_VERSION := 1.5.7
 _ATLANTIS_VERSION  := 0.36.0
