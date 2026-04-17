@@ -4,7 +4,7 @@ date: 2026-04-17
 description: "Using Kubernetes and passing the CKA exam are two completely different things. Here's what I learned after weeks of study and finally passing one of the hardest exams I've ever taken."
 categories: ["Kubernetes"]
 tags: ["Kubernetes", "CKA", "Certifications", "DevOps", "Cloud"]
-image: "cka-certified-kubernetes-administrator.png"
+image: "cka-certified-kubernetes-administrator_v1.png"
 ---
 
 ## ✨ Introduction
